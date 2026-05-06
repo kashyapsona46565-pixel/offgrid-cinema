@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Wifi, Tv, Flame, Gamepad2, Wind, ArrowRight, Star } from "lucide-react";
+import { Wifi, Tv, Gamepad2, Wind, ArrowRight, Star, Utensils } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import Particles from "@/components/site/Particles";
 import Reveal from "@/components/site/Reveal";
@@ -9,8 +9,8 @@ import { images, WHATSAPP } from "@/data/villa";
 
 const highlights = [
   { icon: Tv, label: "Smart TV" },
-  { icon: Wifi, label: "High-Speed WiFi" },
-  { icon: Flame, label: "Rooftop BBQ" },
+  { icon: Wifi, label: "WiFi" },
+  { icon: Utensils, label: "Full Kitchen" },
   { icon: Gamepad2, label: "Indoor Games" },
   { icon: Wind, label: "AC Bedrooms" },
 ];
@@ -50,7 +50,7 @@ const Home = () => {
               transition={{ delay: 1.8, duration: 0.9 }}
               className="block text-foreground"
             >
-              Escape the Noise.
+              A second home
             </motion.span>
             <motion.span
               initial={{ opacity: 0, y: 40 }}
@@ -58,7 +58,7 @@ const Home = () => {
               transition={{ delay: 2.0, duration: 0.9 }}
               className="block shimmer-text"
             >
-              Live Off The Grid.
+              in the hills.
             </motion.span>
           </h1>
 
@@ -68,8 +68,9 @@ const Home = () => {
             transition={{ delay: 2.4, duration: 1 }}
             className="mt-6 max-w-xl text-lg text-muted-foreground"
           >
-            A cinematic 2BHK luxury villa wrapped in misty hills. Rooftop BBQ,
-            sheesha nights, and the kind of silence you forgot existed.
+            A simple, comfortable 2BHK in Lonavala. Quiet rooms, a real
+            kitchen, and easy access to the market — exactly what a weekend
+            away should feel like.
           </motion.p>
 
           <motion.div
@@ -133,25 +134,25 @@ const Home = () => {
         </Reveal>
         <Reveal delay={0.1}>
           <h2 className="mt-4 max-w-3xl font-display text-4xl md:text-6xl">
-            Not a stay. A <span className="text-glow text-primary">cinematic ritual</span>.
+            Just a <span className="text-glow text-primary">comfortable home</span>, away from yours.
           </h2>
         </Reveal>
 
         <div className="mt-16 grid gap-6 md:grid-cols-3">
           {[
             {
-              t: "Designed for stillness",
-              d: "Soft marble, low light, slow mornings. A space tuned for the version of you that finally exhales.",
+              t: "Quiet & restful",
+              d: "Two AC bedrooms, blackout curtains and soft beds. Sleep in, take it slow.",
               img: images.bedroom4,
             },
             {
-              t: "Rooftop, redefined",
-              d: "Sheesha smoke curls into Lonavala mist. Open BBQ, open sky, open ended conversations.",
+              t: "A real kitchen",
+              d: "Cook a proper meal or chai. Fridge, induction, full crockery — like home.",
               img: images.exterior2,
             },
             {
-              t: "Quiet luxury",
-              d: "Spa-grade baths, AC suites, butter-soft linens. Premium without being precious.",
+              t: "Clean & comfortable",
+              d: "Spotless bathrooms, hot water, fresh linens. Nothing fancy — just well kept.",
               img: images.bath1,
             },
           ].map((card, i) => (
@@ -179,13 +180,13 @@ const Home = () => {
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <div className="text-xs uppercase tracking-[0.4em] text-primary">Guest Voices</div>
-            <h2 className="mt-4 font-display text-4xl md:text-5xl">Stays remembered as cinema.</h2>
+            <h2 className="mt-4 font-display text-4xl md:text-5xl">Honest words from honest stays.</h2>
           </Reveal>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {[
-              { n: "Aanya & Rohit", q: "Felt like a movie set. The rooftop at dusk — unreal." },
-              { n: "The Mehras", q: "Cleanest, most stylish villa in Lonavala. Already rebooked." },
-              { n: "Kabir", q: "Disconnected for 48 hours. Came back with a new brain." },
+              { n: "Aanya & Rohit", q: "Felt like our own home. Quiet, clean and very comfortable." },
+              { n: "The Mehras", q: "Simple, well-kept villa. Kids loved it. We'll be back." },
+              { n: "Kabir", q: "No fuss, no over-the-top promises. Exactly what we needed." },
             ].map((t, i) => (
               <Reveal key={t.n} delay={i * 0.1}>
                 <div className="glass h-full rounded-3xl p-7 transition-all hover:shadow-neon">
@@ -213,7 +214,7 @@ const Home = () => {
         </Reveal>
         <Reveal delay={0.1}>
           <h2 className="mt-6 font-display text-5xl md:text-7xl">
-            Your <span className="text-glow text-primary">escape</span> begins now.
+            Plan a <span className="text-glow text-primary">slow weekend</span>.
           </h2>
         </Reveal>
         <Reveal delay={0.2}>

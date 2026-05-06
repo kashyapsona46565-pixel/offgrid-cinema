@@ -6,8 +6,8 @@ export const Footer = () => (
       <div className="md:col-span-2">
         <div className="font-display text-3xl text-primary text-glow">Off The Grid</div>
         <p className="mt-3 max-w-md text-sm text-muted-foreground">
-          A cinematic 2BHK luxury villa tucked into Lonavala. Disconnect from
-          the noise. Reconnect with what matters.
+          A simple 2BHK second-home in Lonavala. Comfortable, quiet, and
+          made for slow weekends with the people you like.
         </p>
       </div>
       <div>
