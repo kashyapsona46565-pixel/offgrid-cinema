@@ -8,35 +8,47 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Off The Grid – cinematic dark luxury */
+    --background: 0 0% 2%;
+    --foreground: 0 0% 96%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 96%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 96%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 158 100% 50%;            /* neon green #00FFAA-ish */
+    --primary-foreground: 0 0% 4%;
+    --primary-glow: 158 100% 60%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 28 100% 55%;            /* warm orange */
+    --secondary-foreground: 0 0% 4%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 158 100% 50%;
+    --accent-foreground: 0 0% 4%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 0 0% 14%;
+    --input: 0 0% 12%;
+    --ring: 158 100% 50%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
+
+    --gradient-hero: radial-gradient(ellipse at 30% 20%, hsl(158 100% 50% / 0.18), transparent 60%),
+                     radial-gradient(ellipse at 80% 80%, hsl(28 100% 55% / 0.15), transparent 60%),
+                     linear-gradient(180deg, hsl(0 0% 3%), hsl(0 0% 1%));
+    --gradient-neon: linear-gradient(135deg, hsl(158 100% 50%), hsl(180 100% 55%));
+    --gradient-ember: linear-gradient(135deg, hsl(28 100% 55%), hsl(12 100% 55%));
+    --shadow-neon: 0 0 40px hsl(158 100% 50% / 0.35), 0 0 80px hsl(158 100% 50% / 0.15);
+    --shadow-ember: 0 0 40px hsl(28 100% 55% / 0.35);
+    --shadow-card: 0 30px 80px -20px hsl(0 0% 0% / 0.8);
+    --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -54,44 +66,6 @@ All colors MUST be HSL.
 
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
 }
 
 @layer base {
@@ -101,5 +75,67 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+    cursor: none;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  h1,h2,h3,h4 { font-family: 'Playfair Display', serif; letter-spacing: -0.02em; }
+}
+
+@layer utilities {
+  .text-glow { text-shadow: 0 0 20px hsl(var(--primary) / 0.6), 0 0 40px hsl(var(--primary) / 0.3); }
+  .text-glow-ember { text-shadow: 0 0 20px hsl(var(--secondary) / 0.6); }
+  .bg-hero { background: var(--gradient-hero); }
+  .bg-neon { background: var(--gradient-neon); }
+  .bg-ember { background: var(--gradient-ember); }
+  .shadow-neon { box-shadow: var(--shadow-neon); }
+  .shadow-ember { box-shadow: var(--shadow-ember); }
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .glass {
+    background: linear-gradient(180deg, hsl(0 0% 8% / 0.6), hsl(0 0% 4% / 0.6));
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(0 0% 100% / 0.06);
+  }
+  .tilt-card { transform-style: preserve-3d; transition: transform 0.4s var(--transition-smooth); }
+
+  /* Rain overlay */
+  .rain {
+    background-image: repeating-linear-gradient(
+      transparent 0 18px,
+      hsl(0 0% 100% / 0.04) 18px 19px
+    );
+    animation: rain-fall 0.8s linear infinite;
+  }
+  @keyframes rain-fall {
+    from { background-position-y: 0; }
+    to { background-position-y: 19px; }
+  }
+
+  @keyframes float-up {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+  }
+  .particle { animation: float-up linear infinite; }
+
+  @keyframes pulse-glow {
+    0%,100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.4); }
+    50% { box-shadow: 0 0 50px hsl(var(--primary) / 0.8); }
+  }
+  .pulse-glow { animation: pulse-glow 2.5s ease-in-out infinite; }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .shimmer-text {
+    background: linear-gradient(90deg, hsl(0 0% 60%), hsl(158 100% 60%), hsl(0 0% 60%));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 4s linear infinite;
   }
 }
