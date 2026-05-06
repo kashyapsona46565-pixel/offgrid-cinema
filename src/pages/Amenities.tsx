@@ -12,9 +12,9 @@ const groups = [
     title: "Bathroom",
     icon: Bath,
     items: [
-      { i: ShowerHead, l: "Rain shower" },
-      { i: Sparkles, l: "Spa-style tiling" },
+      { i: ShowerHead, l: "Shower" },
       { i: Bath, l: "Hot water geyser" },
+      { i: Sparkles, l: "Clean & well kept" },
     ],
   },
   {
@@ -49,9 +49,9 @@ const groups = [
     title: "Outdoor",
     icon: TreePine,
     items: [
-      { i: Flame, l: "Rooftop BBQ" },
       { i: TreePine, l: "Garden views" },
       { i: Car, l: "Free parking" },
+      { i: Flame, l: "Outdoor seating" },
     ],
   },
   {
@@ -70,7 +70,7 @@ const Amenities = () => (
     <section className="pt-40 pb-16 text-center">
       <Reveal>
         <div className="text-xs uppercase tracking-[0.4em] text-primary">Amenities</div>
-        <h1 className="mt-4 font-display text-5xl md:text-7xl">Everything. Nothing extra.</h1>
+        <h1 className="mt-4 font-display text-5xl md:text-7xl">The basics, done well.</h1>
       </Reveal>
     </section>
 

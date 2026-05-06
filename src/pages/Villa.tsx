@@ -7,31 +7,31 @@ const chapters = [
   {
     n: "01",
     t: "Arrival",
-    d: "You turn off the expressway and the world drops a notch. The villa unveils itself behind tall trees — a balcony of warm wood, white walls, and the smell of monsoon earth. The market is minutes away, but you won't need it.",
+    d: "Just off the expressway, tucked behind some trees. Easy to find, easy to settle in. The market is minutes away whenever you need something.",
     img: images.exterior2,
   },
   {
     n: "02",
-    t: "Two suites, one calm",
-    d: "A 2BHK fully furnished retreat. Two AC bedrooms, both styled like quiet hotel suites — marble floors, soft mirrors, blackout drapes. Sleep deeper than you have in months.",
+    t: "Two comfy bedrooms",
+    d: "A 2BHK fully furnished home. Two AC bedrooms with comfortable beds, fresh linens and blackout curtains for proper sleep.",
     img: images.bedroom4,
   },
   {
     n: "03",
     t: "Kitchen & living",
-    d: "A real kitchen for real meals — induction, fridge, full crockery. Or skip it: order in, sprawl across the couch, and let the hours blur.",
+    d: "A proper kitchen — induction, fridge, full crockery. Cook a meal or order in and sprawl on the couch. Whatever feels right.",
     img: images.bedroom2,
   },
   {
     n: "04",
-    t: "Spa-style baths",
-    d: "Two beautifully tiled bathrooms with rain showers, geyser, and that rare thing in a rental — pressure. One indigo, one ivory. Both made for long, slow rinses.",
+    t: "Clean bathrooms",
+    d: "Two clean, well-tiled bathrooms with hot water geysers and good pressure. Simple and well kept.",
     img: images.bath3,
   },
   {
     n: "05",
-    t: "Rooftop, BBQ, sheesha",
-    d: "The rooftop is the protagonist. Set up the BBQ, light the sheesha, queue the playlist. Lonavala mist rolls in. Conversations get longer. Time gets shorter.",
+    t: "Slow evenings",
+    d: "Indoor games, a Smart TV, good WiFi and a quiet balcony. Long chats, slow chai, early nights — that kind of weekend.",
     img: images.exterior1,
   },
 ];
@@ -45,13 +45,13 @@ const Villa = () => (
         </Reveal>
         <Reveal delay={0.1}>
           <h1 className="mt-4 font-display text-5xl md:text-7xl">
-            A weekend that <span className="text-glow text-primary">edits itself</span> like a film.
+            A simple <span className="text-glow text-primary">second home</span> in Lonavala.
           </h1>
         </Reveal>
         <Reveal delay={0.2}>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-            Off The Grid is a 2BHK private villa in Lonavala. Below, the full
-            story — chapter by chapter — of what living here for 48 hours feels like.
+            Off The Grid is a 2BHK private villa in Lonavala. Comfortable,
+            clean and quiet — here's a quick walk-through.
           </p>
         </Reveal>
       </div>
@@ -79,8 +79,8 @@ const Villa = () => (
       <Reveal>
         <div className="mt-32 flex flex-wrap items-center justify-between gap-6 rounded-3xl border border-primary/30 bg-card p-10 shadow-neon">
           <div>
-            <div className="font-display text-3xl">Ready to write your chapter?</div>
-            <p className="mt-2 text-muted-foreground">Weekend slots are limited. Lock yours in under 60 seconds.</p>
+            <div className="font-display text-3xl">Plan your weekend.</div>
+            <p className="mt-2 text-muted-foreground">Check available dates and book in a minute.</p>
           </div>
           <div className="flex gap-3">
             <Link to="/booking" className="rounded-full bg-neon px-7 py-3.5 font-semibold text-primary-foreground shadow-neon hover:scale-105 transition">Check Dates</Link>
