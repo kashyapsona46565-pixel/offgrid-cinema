@@ -4,7 +4,7 @@ export const Footer = () => (
   <footer className="relative mt-32 border-t border-border/40 bg-background">
     <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-4">
       <div className="md:col-span-2">
-        <div className="font-display text-3xl text-primary text-glow">Off The Grid</div>
+        <div className="font-display text-3xl text-primary">Off The Grid</div>
         <p className="mt-3 max-w-md text-sm text-muted-foreground">
           A simple 2BHK second-home in Lonavala. Comfortable, quiet, and
           made for slow weekends with the people you like.

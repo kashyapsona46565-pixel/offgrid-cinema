@@ -34,7 +34,7 @@ const Gallery = () => {
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                <div className="absolute inset-0 ring-1 ring-inset ring-foreground/0 transition-all group-hover:ring-primary/50 group-hover:shadow-neon" />
+                <div className="absolute inset-0 ring-1 ring-inset ring-foreground/0 transition-all group-hover:ring-primary/30" />
                 <div className="absolute inset-x-0 bottom-0 translate-y-4 p-5 text-left opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                   <div className="font-display text-xl">{g.label}</div>
                 </div>
@@ -67,7 +67,7 @@ const Gallery = () => {
               transition={{ duration: 0.4 }}
               src={gallery[open].src}
               alt={gallery[open].label}
-              className="max-h-[85vh] max-w-[90vw] rounded-2xl object-contain shadow-neon"
+              className="max-h-[85vh] max-w-[90vw] rounded-2xl object-contain shadow-warm"
             />
           </motion.div>
         )}

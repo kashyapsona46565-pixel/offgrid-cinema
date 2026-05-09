@@ -2,68 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Off The Grid — calm, earthy, hill-retreat palette */
 
 @layer base {
   :root {
-    /* Off The Grid – cinematic dark luxury */
-    --background: 0 0% 2%;
-    --foreground: 0 0% 96%;
+    --background: 35 18% 6%;            /* warm dark charcoal #110f0d */
+    --foreground: 35 15% 94%;           /* warm cream */
 
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 96%;
+    --card: 35 14% 10%;
+    --card-foreground: 35 15% 94%;
 
-    --popover: 0 0% 4%;
-    --popover-foreground: 0 0% 96%;
+    --popover: 35 14% 9%;
+    --popover-foreground: 35 15% 94%;
 
-    --primary: 158 100% 50%;            /* neon green #00FFAA-ish */
-    --primary-foreground: 0 0% 4%;
-    --primary-glow: 158 100% 60%;
+    --primary: 145 18% 42%;             /* muted sage green */
+    --primary-foreground: 35 18% 6%;
+    --primary-glow: 145 18% 50%;
 
-    --secondary: 28 100% 55%;            /* warm orange */
-    --secondary-foreground: 0 0% 4%;
+    --secondary: 28 35% 52%;             /* warm terracotta */
+    --secondary-foreground: 35 18% 6%;
 
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 35 10% 16%;
+    --muted-foreground: 35 8% 62%;
 
-    --accent: 158 100% 50%;
-    --accent-foreground: 0 0% 4%;
+    --accent: 145 18% 42%;
+    --accent-foreground: 35 18% 6%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 50% 45%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 14%;
-    --input: 0 0% 12%;
-    --ring: 158 100% 50%;
+    --border: 35 10% 18%;
+    --input: 35 10% 15%;
+    --ring: 145 18% 42%;
 
     --radius: 1rem;
 
-    --gradient-hero: radial-gradient(ellipse at 30% 20%, hsl(158 100% 50% / 0.18), transparent 60%),
-                     radial-gradient(ellipse at 80% 80%, hsl(28 100% 55% / 0.15), transparent 60%),
-                     linear-gradient(180deg, hsl(0 0% 3%), hsl(0 0% 1%));
-    --gradient-neon: linear-gradient(135deg, hsl(158 100% 50%), hsl(180 100% 55%));
-    --gradient-ember: linear-gradient(135deg, hsl(28 100% 55%), hsl(12 100% 55%));
-    --shadow-neon: 0 0 40px hsl(158 100% 50% / 0.35), 0 0 80px hsl(158 100% 50% / 0.15);
-    --shadow-ember: 0 0 40px hsl(28 100% 55% / 0.35);
-    --shadow-card: 0 30px 80px -20px hsl(0 0% 0% / 0.8);
+    --gradient-hero: radial-gradient(ellipse at 30% 20%, hsl(145 18% 42% / 0.12), transparent 60%),
+                     radial-gradient(ellipse at 80% 80%, hsl(28 35% 52% / 0.10), transparent 60%),
+                     linear-gradient(180deg, hsl(35 18% 6%), hsl(35 18% 4%));
+    --gradient-primary: linear-gradient(135deg, hsl(145 18% 42%), hsl(160 18% 48%));
+    --gradient-secondary: linear-gradient(135deg, hsl(28 35% 52%), hsl(20 35% 48%));
+    --shadow-warm: 0 8px 32px hsl(35 10% 0% / 0.45);
+    --shadow-soft: 0 0 24px hsl(145 18% 42% / 0.12);
+    --shadow-card: 0 30px 80px -20px hsl(0 0% 0% / 0.6);
     --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
@@ -85,57 +75,25 @@ All colors MUST be HSL.
 }
 
 @layer utilities {
-  .text-glow { text-shadow: 0 0 20px hsl(var(--primary) / 0.6), 0 0 40px hsl(var(--primary) / 0.3); }
-  .text-glow-ember { text-shadow: 0 0 20px hsl(var(--secondary) / 0.6); }
+  .text-glow { text-shadow: 0 0 16px hsl(var(--primary) / 0.25); }
   .bg-hero { background: var(--gradient-hero); }
-  .bg-neon { background: var(--gradient-neon); }
-  .bg-ember { background: var(--gradient-ember); }
-  .shadow-neon { box-shadow: var(--shadow-neon); }
-  .shadow-ember { box-shadow: var(--shadow-ember); }
+  .bg-primary-gradient { background: var(--gradient-primary); }
+  .bg-secondary-gradient { background: var(--gradient-secondary); }
+  .shadow-warm { box-shadow: var(--shadow-warm); }
+  .shadow-soft { box-shadow: var(--shadow-soft); }
   .shadow-card { box-shadow: var(--shadow-card); }
   .glass {
-    background: linear-gradient(180deg, hsl(0 0% 8% / 0.6), hsl(0 0% 4% / 0.6));
+    background: linear-gradient(180deg, hsl(35 14% 10% / 0.55), hsl(35 14% 7% / 0.55));
     backdrop-filter: blur(20px);
-    border: 1px solid hsl(0 0% 100% / 0.06);
+    border: 1px solid hsl(35 15% 100% / 0.05);
   }
   .tilt-card { transform-style: preserve-3d; transition: transform 0.4s var(--transition-smooth); }
 
-  /* Rain overlay */
-  .rain {
-    background-image: repeating-linear-gradient(
-      transparent 0 18px,
-      hsl(0 0% 100% / 0.04) 18px 19px
-    );
-    animation: rain-fall 0.8s linear infinite;
-  }
-  @keyframes rain-fall {
-    from { background-position-y: 0; }
-    to { background-position-y: 19px; }
-  }
-
+  /* Subtle ambient particles */
   @keyframes float-up {
     0% { transform: translateY(100vh) scale(0); opacity: 0; }
-    10% { opacity: 1; }
+    10% { opacity: 0.6; }
     100% { transform: translateY(-10vh) scale(1); opacity: 0; }
   }
   .particle { animation: float-up linear infinite; }
-
-  @keyframes pulse-glow {
-    0%,100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.4); }
-    50% { box-shadow: 0 0 50px hsl(var(--primary) / 0.8); }
-  }
-  .pulse-glow { animation: pulse-glow 2.5s ease-in-out infinite; }
-
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-  .shimmer-text {
-    background: linear-gradient(90deg, hsl(0 0% 60%), hsl(158 100% 60%), hsl(0 0% 60%));
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: shimmer 4s linear infinite;
-  }
 }

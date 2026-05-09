@@ -24,7 +24,7 @@ export const Loader = () => {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="text-center"
             >
-              <div className="font-display text-5xl md:text-7xl text-glow text-primary">
+              <div className="font-display text-5xl md:text-7xl text-primary">
                 Off The Grid
               </div>
               <div className="mt-3 tracking-[0.5em] text-xs text-muted-foreground uppercase">
@@ -35,7 +35,7 @@ export const Loader = () => {
                   initial={{ x: "-100%" }}
                   animate={{ x: "100%" }}
                   transition={{ duration: 1.4, ease: "easeInOut" }}
-                  className="h-full w-full bg-neon"
+                  className="h-full w-full bg-primary-gradient"
                 />
               </div>
             </motion.div>

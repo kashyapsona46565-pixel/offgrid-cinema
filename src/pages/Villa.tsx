@@ -77,13 +77,13 @@ const Villa = () => (
       </div>
 
       <Reveal>
-        <div className="mt-32 flex flex-wrap items-center justify-between gap-6 rounded-3xl border border-primary/30 bg-card p-10 shadow-neon">
+        <div className="mt-32 flex flex-wrap items-center justify-between gap-6 rounded-3xl border border-primary/20 bg-card p-10 shadow-warm">
           <div>
             <div className="font-display text-3xl">Plan your weekend.</div>
             <p className="mt-2 text-muted-foreground">Check available dates and book in a minute.</p>
           </div>
           <div className="flex gap-3">
-            <Link to="/booking" className="rounded-full bg-neon px-7 py-3.5 font-semibold text-primary-foreground shadow-neon hover:scale-105 transition">Check Dates</Link>
+            <Link to="/booking" className="rounded-full bg-primary-gradient px-7 py-3.5 font-semibold text-primary-foreground shadow-warm hover:scale-105 transition">Check Dates</Link>
             <a href={WHATSAPP} target="_blank" rel="noreferrer" className="rounded-full border border-foreground/20 px-7 py-3.5 font-semibold hover:border-primary hover:text-primary transition">WhatsApp</a>
           </div>
         </div>

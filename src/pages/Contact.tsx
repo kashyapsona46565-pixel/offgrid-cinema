@@ -34,7 +34,7 @@ const Contact = () => {
                 placeholder="Your name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full rounded-2xl border border-border bg-background px-5 py-4 outline-none transition focus:border-primary focus:shadow-neon"
+                className="w-full rounded-2xl border border-border bg-background px-5 py-4 outline-none transition focus:border-primary focus:shadow-soft"
               />
               <input
                 required
@@ -42,7 +42,7 @@ const Contact = () => {
                 placeholder="Email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full rounded-2xl border border-border bg-background px-5 py-4 outline-none transition focus:border-primary focus:shadow-neon"
+                className="w-full rounded-2xl border border-border bg-background px-5 py-4 outline-none transition focus:border-primary focus:shadow-soft"
               />
               <textarea
                 required
@@ -50,9 +50,9 @@ const Contact = () => {
                 placeholder="Tell us your dates & vibe…"
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="w-full rounded-2xl border border-border bg-background px-5 py-4 outline-none transition focus:border-primary focus:shadow-neon"
+                className="w-full rounded-2xl border border-border bg-background px-5 py-4 outline-none transition focus:border-primary focus:shadow-soft"
               />
-              <button type="submit" className="w-full rounded-full bg-neon py-4 font-semibold text-primary-foreground shadow-neon transition-transform hover:scale-[1.02]">
+              <button type="submit" className="w-full rounded-full bg-primary-gradient py-4 font-semibold text-primary-foreground shadow-warm transition-transform hover:scale-[1.02]">
                 Send via WhatsApp
               </button>
             </form>
@@ -72,9 +72,9 @@ const Contact = () => {
                 href={c.href}
                 target="_blank"
                 rel="noreferrer"
-                className="glass group flex items-center gap-5 rounded-3xl p-6 transition-all hover:shadow-neon"
-              >
-                <span className="grid h-14 w-14 place-items-center rounded-2xl bg-primary/15 text-primary shadow-neon transition-transform group-hover:scale-110">
+              className="glass group flex items-center gap-5 rounded-3xl p-6 transition-all hover:shadow-warm"
+            >
+              <span className="grid h-14 w-14 place-items-center rounded-2xl bg-primary/15 text-primary transition-transform group-hover:scale-110">
                   <c.i className="h-6 w-6" />
                 </span>
                 <div>

@@ -77,9 +77,9 @@ const Amenities = () => (
     <section className="mx-auto grid max-w-7xl gap-6 px-6 pb-32 md:grid-cols-2 lg:grid-cols-3">
       {groups.map((g, gi) => (
         <Reveal key={g.title} delay={gi * 0.05}>
-          <TiltCard className="glass group h-full rounded-3xl p-8 transition-all hover:shadow-neon">
+          <TiltCard className="glass group h-full rounded-3xl p-8 transition-all hover:shadow-warm">
             <div className="flex items-center gap-4">
-              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-primary/15 text-primary shadow-neon">
+              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-primary/15 text-primary">
                 <g.icon className="h-6 w-6" />
               </span>
               <div className="font-display text-2xl">{g.title}</div>
