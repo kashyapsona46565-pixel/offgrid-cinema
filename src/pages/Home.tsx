@@ -28,7 +28,6 @@ const Home = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background" />
           <div className="absolute inset-0 bg-hero" />
-          <div className="rain absolute inset-0 opacity-40" />
         </div>
         <Particles count={40} />
 
@@ -56,7 +55,7 @@ const Home = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.0, duration: 0.9 }}
-              className="block shimmer-text"
+              className="block text-primary"
             >
               in the hills.
             </motion.span>
@@ -81,16 +80,16 @@ const Home = () => {
           >
             <Link
               to="/booking"
-              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-neon px-7 py-4 text-sm font-semibold text-primary-foreground shadow-neon transition-transform hover:scale-105"
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-primary-gradient px-7 py-4 text-sm font-semibold text-primary-foreground shadow-warm transition-transform hover:scale-105"
             >
-              <span className="absolute inset-0 -translate-x-full bg-white/20 transition-transform duration-700 group-hover:translate-x-full" />
+              <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-700 group-hover:translate-x-full" />
               Check Availability <ArrowRight className="h-4 w-4" />
             </Link>
             <a
               href={WHATSAPP}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border border-foreground/20 px-7 py-4 text-sm font-semibold backdrop-blur transition-all hover:border-primary hover:text-primary hover:shadow-neon"
+              className="rounded-full border border-foreground/20 px-7 py-4 text-sm font-semibold backdrop-blur transition-all hover:border-primary hover:text-primary hover:shadow-warm"
             >
               Book on WhatsApp
             </a>
@@ -116,7 +115,7 @@ const Home = () => {
           {highlights.map((h) => (
             <Reveal key={h.label} delay={0.05}>
               <div className="group flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-primary">
-                <span className="grid h-10 w-10 place-items-center rounded-full border border-border bg-background transition-all group-hover:border-primary group-hover:shadow-neon">
+                <span className="grid h-10 w-10 place-items-center rounded-full border border-border bg-background transition-all group-hover:border-primary">
                   <h.icon className="h-5 w-5" />
                 </span>
                 {h.label}
@@ -168,7 +167,7 @@ const Home = () => {
                   <div className="font-display text-2xl">{card.t}</div>
                   <p className="mt-2 text-sm text-muted-foreground">{card.d}</p>
                 </div>
-                <div className="absolute inset-0 ring-1 ring-inset ring-foreground/0 transition-all group-hover:ring-primary/40 group-hover:shadow-neon" />
+                <div className="absolute inset-0 ring-1 ring-inset ring-foreground/0 transition-all group-hover:ring-primary/30" />
               </TiltCard>
             </Reveal>
           ))}
@@ -189,7 +188,7 @@ const Home = () => {
               { n: "Kabir", q: "No fuss, no over-the-top promises. Exactly what we needed." },
             ].map((t, i) => (
               <Reveal key={t.n} delay={i * 0.1}>
-                <div className="glass h-full rounded-3xl p-7 transition-all hover:shadow-neon">
+                <div className="glass h-full rounded-3xl p-7 transition-all hover:shadow-warm">
                   <div className="flex gap-1 text-primary">
                     {Array.from({ length: 5 }).map((_, k) => (
                       <Star key={k} className="h-4 w-4 fill-current" />
