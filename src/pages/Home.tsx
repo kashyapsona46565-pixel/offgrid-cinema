@@ -220,7 +220,7 @@ const Home = () => {
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Link
               to="/booking"
-              className="rounded-full bg-neon px-8 py-4 font-semibold text-primary-foreground shadow-neon pulse-glow transition-transform hover:scale-105"
+              className="rounded-full bg-primary-gradient px-8 py-4 font-semibold text-primary-foreground shadow-warm transition-transform hover:scale-105"
             >
               Check Availability
             </Link>
