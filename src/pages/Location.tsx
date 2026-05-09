@@ -35,8 +35,8 @@ const Location = () => (
     <section className="mx-auto grid max-w-7xl gap-6 px-6 py-20 md:grid-cols-2 lg:grid-cols-3">
       {tips.map((tp, i) => (
         <Reveal key={tp.t} delay={i * 0.05}>
-          <div className="glass h-full rounded-3xl p-7 transition-all hover:shadow-neon">
-            <span className="grid h-12 w-12 place-items-center rounded-2xl bg-primary/15 text-primary shadow-neon">
+          <div className="glass h-full rounded-3xl p-7 transition-all hover:shadow-warm">
+            <span className="grid h-12 w-12 place-items-center rounded-2xl bg-primary/15 text-primary">
               <tp.i className="h-5 w-5" />
             </span>
             <div className="mt-5 font-display text-2xl">{tp.t}</div>
@@ -45,7 +45,7 @@ const Location = () => (
         </Reveal>
       ))}
       <Reveal delay={0.3}>
-        <div className="rounded-3xl bg-neon p-7 text-primary-foreground shadow-neon">
+        <div className="rounded-3xl bg-primary-gradient p-7 text-primary-foreground shadow-warm">
           <MapPin className="h-6 w-6" />
           <div className="mt-4 font-display text-2xl">Lonavala, Maharashtra</div>
           <p className="mt-2 text-sm opacity-80">Exact address shared after booking confirmation for guest privacy.</p>

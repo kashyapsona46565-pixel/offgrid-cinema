@@ -72,9 +72,9 @@ const Contact = () => {
                 href={c.href}
                 target="_blank"
                 rel="noreferrer"
-                className="glass group flex items-center gap-5 rounded-3xl p-6 transition-all hover:shadow-neon"
-              >
-                <span className="grid h-14 w-14 place-items-center rounded-2xl bg-primary/15 text-primary shadow-neon transition-transform group-hover:scale-110">
+              className="glass group flex items-center gap-5 rounded-3xl p-6 transition-all hover:shadow-warm"
+            >
+              <span className="grid h-14 w-14 place-items-center rounded-2xl bg-primary/15 text-primary transition-transform group-hover:scale-110">
                   <c.i className="h-6 w-6" />
                 </span>
                 <div>

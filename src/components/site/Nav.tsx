@@ -18,7 +18,7 @@ export const Nav = () => {
     <header className="fixed left-0 right-0 top-0 z-50">
       <div className="mx-auto mt-4 flex max-w-7xl items-center justify-between px-4 md:px-8">
         <Link to="/" className="group flex items-center gap-2">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-neon text-primary-foreground shadow-neon font-display font-bold">
+          <span className="grid h-9 w-9 place-items-center rounded-full bg-primary-gradient text-primary-foreground shadow-warm font-display font-bold">
             O
           </span>
           <span className="font-display text-lg tracking-wide">
@@ -34,7 +34,7 @@ export const Nav = () => {
               className={({ isActive }) =>
                 `rounded-full px-4 py-2 text-sm transition-all ${
                   isActive
-                    ? "bg-primary/15 text-primary text-glow"
+                    ? "bg-primary/15 text-primary"
                     : "text-muted-foreground hover:text-foreground"
                 }`
               }
@@ -47,7 +47,7 @@ export const Nav = () => {
           href="https://wa.me/919999999999?text=Hi%20I'd%20like%20to%20book%20Off%20The%20Grid%20villa"
           target="_blank"
           rel="noreferrer"
-          className="hidden rounded-full bg-neon px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-neon transition-transform hover:scale-105 md:inline-flex"
+          className="hidden rounded-full bg-primary-gradient px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-warm transition-transform hover:scale-105 md:inline-flex"
         >
           Book Now
         </a>
