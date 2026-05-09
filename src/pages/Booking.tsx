@@ -115,7 +115,7 @@ const Booking = () => {
                       past && "text-muted-foreground/30 cursor-not-allowed line-through",
                       blocked && "bg-destructive/10 text-destructive/60 cursor-not-allowed line-through",
                       !blocked && !past && !sel && !range && "hover:bg-primary/15 hover:text-primary",
-                      sel && "bg-neon text-primary-foreground shadow-neon font-semibold",
+                      sel && "bg-primary-gradient text-primary-foreground shadow-warm font-semibold",
                       range && "bg-primary/15 text-primary",
                     ]
                       .filter(Boolean)
@@ -128,7 +128,7 @@ const Booking = () => {
             </div>
 
             <div className="mt-6 flex flex-wrap gap-4 text-xs text-muted-foreground">
-              <div className="flex items-center gap-2"><span className="h-3 w-3 rounded-sm bg-neon" /> Selected</div>
+              <div className="flex items-center gap-2"><span className="h-3 w-3 rounded-sm bg-primary-gradient" /> Selected</div>
               <div className="flex items-center gap-2"><span className="h-3 w-3 rounded-sm bg-primary/15" /> In stay</div>
               <div className="flex items-center gap-2"><span className="h-3 w-3 rounded-sm bg-destructive/30" /> Blocked</div>
             </div>
@@ -179,7 +179,7 @@ const Booking = () => {
               href={buildWa()}
               target="_blank"
               rel="noreferrer"
-              className="mt-6 block w-full rounded-full bg-neon py-4 text-center font-semibold text-primary-foreground shadow-neon transition-transform hover:scale-[1.02]"
+              className="mt-6 block w-full rounded-full bg-primary-gradient py-4 text-center font-semibold text-primary-foreground shadow-warm transition-transform hover:scale-[1.02]"
             >
               Book via WhatsApp
             </a>
