@@ -47,6 +47,42 @@ export const gallery = [
 export const WHATSAPP =
   "https://wa.me/919999999999?text=Hi%20I'd%20like%20to%20book%20Off%20The%20Grid%20villa";
 
+export const PHONE = "+919999999999";
+export const PHONE_DISPLAY = "+91 99999 99999";
+export const MAPS_URL = "https://maps.google.com/?q=Lonavala+Maharashtra";
+
+export const galleryCategories = [
+  "All",
+  "Living",
+  "Bedrooms",
+  "Kitchen",
+  "Bathrooms",
+  "Outdoor",
+] as const;
+
+export type GalleryCategory = (typeof galleryCategories)[number];
+
+export const galleryWithCategory: { src: string; label: string; category: Exclude<GalleryCategory, "All"> }[] = [
+  { src: exterior1, label: "Villa Façade", category: "Outdoor" },
+  { src: exterior2, label: "Approach", category: "Outdoor" },
+  { src: living1, label: "Living Lounge", category: "Living" },
+  { src: living2, label: "Living & Dining", category: "Living" },
+  { src: living3, label: "Dining Hall", category: "Living" },
+  { src: bedroom1, label: "Master Bedroom", category: "Bedrooms" },
+  { src: bedroom2, label: "Garden Bedroom", category: "Bedrooms" },
+  { src: bedroom3, label: "Twilight Suite", category: "Bedrooms" },
+  { src: bedroom4, label: "Marble Suite", category: "Bedrooms" },
+  { src: bedroom5, label: "Master Suite", category: "Bedrooms" },
+  { src: bedroom6, label: "Plaid Suite", category: "Bedrooms" },
+  { src: bedroom7, label: "Indigo Bedroom", category: "Bedrooms" },
+  { src: kitchen1, label: "Stocked Pantry", category: "Kitchen" },
+  { src: kitchen2, label: "Open Kitchen", category: "Kitchen" },
+  { src: kitchen3, label: "Chef's Corner", category: "Kitchen" },
+  { src: bath1, label: "Bath", category: "Bathrooms" },
+  { src: bath2, label: "Powder Room", category: "Bathrooms" },
+  { src: bath3, label: "Indigo Bath", category: "Bathrooms" },
+];
+
 // Demo blocked dates (would be parsed from Airbnb .ics)
 export const blockedDates: string[] = (() => {
   const out: string[] = [];
