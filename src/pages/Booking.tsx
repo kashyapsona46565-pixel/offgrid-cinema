@@ -1,8 +1,11 @@
 import { useMemo, useState } from "react";
-import { ChevronLeft, ChevronRight, Users, Sparkles } from "lucide-react";
+import {
+  ChevronLeft, ChevronRight, Users, Sparkles, LogIn, LogOut, IdCard,
+  CreditCard, CalendarX, Utensils, ShoppingBag, ChefHat, Phone, MessageCircle,
+} from "lucide-react";
 import Layout from "@/components/site/Layout";
 import Reveal from "@/components/site/Reveal";
-import { blockedDates, WHATSAPP } from "@/data/villa";
+import { blockedDates, WHATSAPP, PHONE } from "@/data/villa";
 
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
 const isSameDay = (a: Date, b: Date) =>
@@ -63,10 +66,10 @@ const Booking = () => {
     <Layout>
       <section className="pt-40 pb-12 text-center">
         <Reveal>
-          <div className="text-xs uppercase tracking-[0.4em] text-primary">Reserve</div>
-          <h1 className="mt-4 font-display text-5xl md:text-7xl">Pick your weekend.</h1>
+          <div className="text-xs uppercase tracking-[0.4em] text-primary">Booking</div>
+          <h1 className="mt-4 font-display text-4xl md:text-6xl">Check dates & confirm via WhatsApp.</h1>
           <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-            Calendar synced with Airbnb. Tap a check-in then a check-out date to lock in your escape.
+            Tap a check-in then a check-out date. We'll confirm availability on WhatsApp or call.
           </p>
         </Reveal>
       </section>
@@ -183,9 +186,128 @@ const Booking = () => {
             >
               Book via WhatsApp
             </a>
-            <p className="mt-3 text-center text-xs text-muted-foreground">Instant reply · Cancellation up to 7 days</p>
+            <a href={`tel:${PHONE}`} className="mt-2 block w-full rounded-full border-2 border-primary py-3.5 text-center text-sm font-semibold text-primary hover:bg-primary/5">
+              Or Call Now
+            </a>
+            <p className="mt-3 text-center text-xs text-muted-foreground">Free cancellation up to 7 days</p>
           </div>
         </Reveal>
+      </section>
+
+      {/* BOOKING INFO CARDS */}
+      <section className="mx-auto max-w-7xl px-4 pb-20 md:px-6">
+        <Reveal>
+          <h2 className="font-display text-3xl md:text-4xl">Booking information</h2>
+          <p className="mt-2 text-muted-foreground">Everything you need to know before you arrive.</p>
+        </Reveal>
+        <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {[
+            { i: LogIn, t: "Check-in", d: "1:00 PM – 9:00 PM. Self check-in." },
+            { i: LogOut, t: "Check-out", d: "By 11:00 AM." },
+            { i: Users, t: "Max guests", d: "10 guests maximum." },
+            { i: CreditCard, t: "Refundable deposit", d: "₹7,000 before check-in. Returned in full if there's no damage. Cash or digital (refunded 1–4 hrs after checkout)." },
+            { i: IdCard, t: "ID requirement", d: "Photo with Address ID — Driving Licence or Aadhar. International guests must share passport copies." },
+            { i: CalendarX, t: "Cancellation policy", d: "100% refund 7+ days before · 50% between 7–4 days · 0% within 3 days of check-in." },
+          ].map((c) => (
+            <Reveal key={c.t}>
+              <div className="h-full rounded-3xl border border-border bg-card p-6 shadow-warm">
+                <span className="grid h-11 w-11 place-items-center rounded-2xl bg-primary/10 text-primary">
+                  <c.i className="h-5 w-5" />
+                </span>
+                <div className="mt-4 font-display text-xl">{c.t}</div>
+                <p className="mt-2 text-sm text-foreground/80">{c.d}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* FOOD & MEALS */}
+      <section className="border-t border-border bg-muted/30">
+        <div className="mx-auto max-w-7xl px-4 py-20 md:px-6">
+          <Reveal>
+            <h2 className="font-display text-3xl md:text-4xl">Food & meals</h2>
+            <p className="mt-2 max-w-2xl text-muted-foreground">
+              We don't cook meals as part of the booking. The kitchen is functional — basic utensils,
+              fridge and stove. Pick whatever works for you.
+            </p>
+          </Reveal>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {[
+              { i: ChefHat, t: "Cook your own", d: "Carry groceries or heat & eat. Bone-china crockery and basic utensils provided. No condiments." },
+              { i: ShoppingBag, t: "Order in", d: "Zomato delivers across Lonavala. Several dhabas to 5-star restaurants close by." },
+              { i: Utensils, t: "Caretaker cooking (optional)", d: "Our caretaker offers cooking on her own charges, based on group size. Arrange with her directly." },
+            ].map((c) => (
+              <Reveal key={c.t}>
+                <div className="h-full rounded-3xl border border-border bg-card p-6">
+                  <span className="grid h-11 w-11 place-items-center rounded-2xl bg-secondary/15 text-secondary">
+                    <c.i className="h-5 w-5" />
+                  </span>
+                  <div className="mt-4 font-display text-xl">{c.t}</div>
+                  <p className="mt-2 text-sm text-foreground/80">{c.d}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* HOUSE RULES + FAQ */}
+      <section className="mx-auto grid max-w-7xl gap-10 px-4 py-20 md:grid-cols-2 md:px-6">
+        <Reveal>
+          <h2 className="font-display text-3xl md:text-4xl">House rules</h2>
+          <ul className="mt-6 space-y-3 text-sm text-foreground/80">
+            {[
+              "No parties or loud music",
+              "No commercial shoots or events",
+              "Birthday celebrations — please get in touch before booking",
+              "No pets allowed",
+              "Damages are chargeable",
+            ].map((r) => (
+              <li key={r} className="flex items-start gap-3 rounded-2xl border border-border bg-card p-4">
+                <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary" />
+                {r}
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+
+        <Reveal>
+          <h2 className="font-display text-3xl md:text-4xl">FAQs</h2>
+          <div className="mt-6 space-y-3">
+            {[
+              { q: "Is BBQ coal included?", a: "BBQ grill and skewers are free. Coal is chargeable on site." },
+              { q: "Is sheesha provided?", a: "Free sheesha with natural coal. Please carry your own flavours." },
+              { q: "Is parking available?", a: "Yes — free parking on premises and free on-street parking." },
+              { q: "How far is the railway station?", a: "About 7–10 minutes by car. Expressway exit is 2 minutes." },
+              { q: "Can I check in early or drop luggage?", a: "Yes, luggage drop-off is allowed if you arrive early or depart late." },
+            ].map((f) => (
+              <details key={f.q} className="group rounded-2xl border border-border bg-card p-5">
+                <summary className="flex cursor-pointer items-center justify-between text-sm font-semibold">
+                  {f.q}
+                  <span className="text-primary transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-3 text-sm text-foreground/80">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </Reveal>
+      </section>
+
+      {/* CTA */}
+      <section className="border-t border-border bg-muted/30 py-16">
+        <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-6 text-center">
+          <h2 className="font-display text-3xl md:text-4xl">Still have questions?</h2>
+          <p className="text-muted-foreground">Call or WhatsApp — we'll get back to you in minutes.</p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a href={`tel:${PHONE}`} className="inline-flex items-center gap-2 rounded-full border-2 border-primary px-6 py-3 text-sm font-semibold text-primary hover:bg-primary/5">
+              <Phone className="h-4 w-4" /> Call Now
+            </a>
+            <a href={WHATSAPP} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-primary-gradient px-6 py-3 text-sm font-semibold text-primary-foreground shadow-warm hover:scale-[1.02]">
+              <MessageCircle className="h-4 w-4" /> WhatsApp Us
+            </a>
+          </div>
+        </div>
       </section>
     </Layout>
   );

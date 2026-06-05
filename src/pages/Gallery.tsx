@@ -1,30 +1,54 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import Reveal from "@/components/site/Reveal";
-import { gallery } from "@/data/villa";
+import { galleryWithCategory, galleryCategories } from "@/data/villa";
 
 const Gallery = () => {
   const [open, setOpen] = useState<number | null>(null);
+  const [cat, setCat] = useState<(typeof galleryCategories)[number]>("All");
+
+  const items = useMemo(
+    () => (cat === "All" ? galleryWithCategory : galleryWithCategory.filter((g) => g.category === cat)),
+    [cat]
+  );
+
+  const next = () => setOpen((i) => (i === null ? i : (i + 1) % items.length));
+  const prev = () => setOpen((i) => (i === null ? i : (i - 1 + items.length) % items.length));
 
   return (
     <Layout>
-      <section className="pt-40 pb-12 text-center">
+      <section className="pt-32 pb-8 text-center md:pt-40">
         <Reveal>
           <div className="text-xs uppercase tracking-[0.4em] text-primary">Gallery</div>
-          <h1 className="mt-4 font-display text-5xl md:text-7xl">Frames from the villa.</h1>
+          <h1 className="mt-4 font-display text-4xl md:text-6xl">Every corner, in detail.</h1>
         </Reveal>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 pb-32">
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5">
-          {gallery.map((g, i) => (
+      <section className="mx-auto max-w-7xl px-4 pb-24 md:px-6">
+        <div className="sticky top-24 z-20 mb-6 flex gap-2 overflow-x-auto rounded-full bg-background/90 p-1 backdrop-blur md:justify-center md:overflow-visible">
+          {galleryCategories.map((c) => (
+            <button
+              key={c}
+              onClick={() => setCat(c)}
+              className={`shrink-0 rounded-full px-5 py-2 text-sm transition-all ${
+                cat === c
+                  ? "bg-primary-gradient text-primary-foreground shadow-warm"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
+          {items.map((g, i) => (
             <Reveal key={i} delay={(i % 6) * 0.05}>
               <button
                 onClick={() => setOpen(i)}
-                className={`group relative block w-full overflow-hidden rounded-2xl shadow-card ${
-                  i % 5 === 0 ? "md:row-span-2 md:h-[640px]" : "h-[280px] md:h-[310px]"
+                className={`group relative block w-full overflow-hidden rounded-2xl shadow-warm ${
+                  i % 7 === 0 ? "md:row-span-2 md:h-[600px]" : "h-[220px] md:h-[290px]"
                 }`}
               >
                 <img
@@ -33,10 +57,10 @@ const Gallery = () => {
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                <div className="absolute inset-0 ring-1 ring-inset ring-foreground/0 transition-all group-hover:ring-primary/30" />
-                <div className="absolute inset-x-0 bottom-0 translate-y-4 p-5 text-left opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                  <div className="font-display text-xl">{g.label}</div>
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                <div className="absolute inset-x-0 bottom-0 translate-y-4 p-4 text-left text-background opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="font-display text-lg">{g.label}</div>
+                  <div className="text-xs opacity-80">{g.category}</div>
                 </div>
               </button>
             </Reveal>
@@ -50,23 +74,26 @@ const Gallery = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9000] flex items-center justify-center bg-background/95 p-6 backdrop-blur-xl"
+            className="fixed inset-0 z-[9000] flex items-center justify-center bg-foreground/90 p-6 backdrop-blur-xl"
             onClick={() => setOpen(null)}
           >
             <button
-              className="absolute right-6 top-6 grid h-12 w-12 place-items-center rounded-full border border-foreground/20 hover:border-primary hover:text-primary"
+              className="absolute right-6 top-6 grid h-12 w-12 place-items-center rounded-full border border-background/40 text-background hover:border-background"
               onClick={() => setOpen(null)}
               aria-label="Close"
             >
               <X />
             </button>
+            <button onClick={(e) => { e.stopPropagation(); prev(); }} aria-label="Previous" className="absolute left-6 top-1/2 -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full border border-background/40 text-background hover:border-background"><ChevronLeft /></button>
+            <button onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Next" className="absolute right-6 top-1/2 -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full border border-background/40 text-background hover:border-background"><ChevronRight /></button>
             <motion.img
               key={open}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.4 }}
-              src={gallery[open].src}
-              alt={gallery[open].label}
+              src={items[open].src}
+              alt={items[open].label}
+              onClick={(e) => e.stopPropagation()}
               className="max-h-[85vh] max-w-[90vw] rounded-2xl object-contain shadow-warm"
             />
           </motion.div>

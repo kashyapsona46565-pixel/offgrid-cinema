@@ -6,33 +6,39 @@ import { Link } from "react-router-dom";
 const chapters = [
   {
     n: "01",
-    t: "Arrival",
-    d: "Just off the expressway, tucked behind some trees. Easy to find, easy to settle in. The market is minutes away whenever you need something.",
-    img: images.exterior2,
+    t: "Living & Dining",
+    d: "Ground floor opens into a spacious living and dining area — comfy seating, a 40\" Smart Android TV and high-speed WiFi. Long chats, slow chai and movie nights.",
+    img: images.living2,
   },
   {
     n: "02",
-    t: "Two comfy bedrooms",
-    d: "A 2BHK fully furnished home. Two AC bedrooms with comfortable beds, fresh linens and blackout curtains for proper sleep.",
-    img: images.bedroom4,
+    t: "Full Kitchen",
+    d: "A functional kitchen with gas stove, fridge, bone-china crockery and basic utensils. Heat & eat, cook simple meals, or order in — Zomato delivers across Lonavala.",
+    img: images.kitchen2,
   },
   {
     n: "03",
-    t: "Kitchen & living",
-    d: "A proper kitchen — induction, fridge, full crockery. Cook a meal or order in and sprawl on the couch. Whatever feels right.",
-    img: images.bedroom2,
+    t: "Two AC Bedrooms",
+    d: "Both bedrooms upstairs with attached bathrooms, 6\" foam mattresses, fresh linens, duvets and blackout curtains. Master bedroom opens to a private balcony.",
+    img: images.bedroom4,
   },
   {
     n: "04",
-    t: "Clean bathrooms",
-    d: "Two clean, well-tiled bathrooms with hot water geysers and good pressure. Simple and well kept.",
+    t: "3 Bathrooms",
+    d: "Two attached upstairs and one on the ground floor. 24x7 hot running water, toiletries, towels and hand napkins provided.",
     img: images.bath3,
   },
   {
     n: "05",
-    t: "Slow evenings",
-    d: "Indoor games, a Smart TV, good WiFi and a quiet balcony. Long chats, slow chai, early nights — that kind of weekend.",
+    t: "Open Terrace",
+    d: "Open-air rooftop with seating — grill on the real coal BBQ, smoke a sheesha (carry your flavours), or just sit out when it's raining. Pure Lonavala monsoon mood.",
     img: images.exterior1,
+  },
+  {
+    n: "06",
+    t: "Digital Detox",
+    d: "Board games, card games, carrom, badminton and table tennis. Put the phone down, beat your cousin at TT, and actually catch up.",
+    img: images.exterior2,
   },
 ];
 
@@ -45,13 +51,14 @@ const Villa = () => (
         </Reveal>
         <Reveal delay={0.1}>
           <h1 className="mt-4 font-display text-5xl md:text-7xl">
-            A simple <span className="text-glow text-primary">second home</span> in Lonavala.
+            A 2BHK townhouse, <span className="text-primary">made for slow weekends</span>.
           </h1>
         </Reveal>
         <Reveal delay={0.2}>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-            Off The Grid is a 2BHK private villa in Lonavala. Comfortable,
-            clean and quiet — here's a quick walk-through.
+            Living, dining, kitchen and one bath on the ground floor. Two
+            AC bedrooms with attached baths upstairs. Open-air terrace on
+            top. Here's a quick walk-through.
           </p>
         </Reveal>
       </div>
