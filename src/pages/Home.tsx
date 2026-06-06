@@ -1,207 +1,382 @@
 import { Link } from "react-router-dom";
 import {
   Wifi, Tv, Wind, Utensils, Users, MapPin, Star, Phone, MessageCircle,
-  Flame, Gamepad2, Trees, Car, Bath, Share2, Heart,
+  Flame, Gamepad2, Trees, Car, Bath, Share2, Check, Shield, LogIn, LogOut,
+  IdCard, CreditCard, CalendarX, ShoppingBag, ChefHat, Bed, ShowerHead,
 } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import Reveal from "@/components/site/Reveal";
-import { images, WHATSAPP, PHONE } from "@/data/villa";
+import BookingWarning from "@/components/site/BookingWarning";
+import { PHONE, buildWhatsApp } from "@/data/villa";
+import { useProperty } from "@/context/PropertyContext";
 import { toast } from "sonner";
 
-const highlights = [
-  { icon: Wifi, label: "High Speed WiFi" },
-  { icon: Tv, label: "40\" Smart TV" },
-  { icon: Trees, label: "Open Terrace" },
-  { icon: Flame, label: "BBQ Grill" },
-  { icon: Gamepad2, label: "Indoor Games" },
-  { icon: Utensils, label: "Full Kitchen" },
-  { icon: Bath, label: "3 Bathrooms" },
-  { icon: Wind, label: "AC Bedrooms" },
-  { icon: Car, label: "Free Parking" },
-  { icon: Users, label: "Sleeps 10" },
-];
+const Home = () => {
+  const { selected } = useProperty();
+  const wa = buildWhatsApp(selected.name);
 
-const share = () => {
-  if (navigator.share) {
-    navigator.share({ title: "Off The Grid – Lonavala", url: window.location.href }).catch(() => {});
-  } else {
-    navigator.clipboard.writeText(window.location.href);
-    toast.success("Link copied to clipboard");
-  }
-};
+  const quickHighlights = [
+    { icon: Wifi, label: "High Speed Wi-Fi" },
+    { icon: Tv, label: '40" Smart Android TV' },
+    { icon: Trees, label: "Open Terrace" },
+    { icon: Flame, label: "BBQ Grill" },
+    { icon: Gamepad2, label: "Indoor Games" },
+    { icon: Utensils, label: "Full Kitchen" },
+    { icon: Bath, label: "3 Bathrooms" },
+    { icon: Wind, label: "AC Bedrooms" },
+    { icon: Car, label: "Free Parking" },
+    { icon: Users, label: "Sleeps 10" },
+    ...(selected.hasBathtub ? [{ icon: ShowerHead, label: "Master Bathtub" }] : []),
+  ];
 
-const Home = () => (
-  <Layout>
-    {/* HEADER STRIP */}
-    <section className="mx-auto max-w-7xl px-4 pt-28 md:px-6 md:pt-32">
-      <Reveal>
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <h1 className="font-display text-3xl md:text-5xl">Off The Grid</h1>
-            <p className="mt-1 text-sm text-muted-foreground md:text-base">
-              Private 2BHK Vacation Rental in Lonavala
-            </p>
-            <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
-              <span className="inline-flex items-center gap-1">
-                <Star className="h-4 w-4 fill-primary text-primary" /> 4.9 · 120+ stays
-              </span>
-              <span className="hidden md:inline">·</span>
-              <span className="inline-flex items-center gap-1">
-                <MapPin className="h-4 w-4 text-primary" /> Lonavala, Maharashtra
-              </span>
-              <span className="hidden md:inline">·</span>
-              <span className="inline-flex items-center gap-1">
-                <Users className="h-4 w-4 text-primary" /> Up to 10 guests
-              </span>
+  const amenityGroups = [
+    {
+      title: "Entertainment", icon: Tv,
+      items: [
+        '40" Smart Android TV', "High-speed Wi-Fi",
+        "Free Sheesha (carry your own flavours)",
+        "BBQ grill with iron skewers (coal chargeable)",
+        "Table Tennis · Badminton · Carrom",
+        "Board Games · Card Games",
+      ],
+    },
+    {
+      title: "Kitchen & Dining", icon: Utensils,
+      items: [
+        "Gas stove", "Refrigerator",
+        "Bone-china crockery & cutlery",
+        "Basic utensils: pots, pans, tava, tea & milk vessels",
+        "20 litres mineral water (included per night)",
+        "Barbecue grill & iron skewers",
+      ],
+    },
+    {
+      title: "Bedroom & Linen", icon: Bed,
+      items: [
+        "Two A/C bedrooms with attached bathrooms",
+        "Bedsheets with duvets",
+        "Extra pillows & blankets",
+        "Mosquito nets · clothes storage · hangers",
+        'High quality 6" foam mattresses + 4" extras',
+        "Iron & drying rack (on request)",
+      ],
+    },
+    {
+      title: "Bathroom", icon: Bath,
+      items: [
+        "3 bathrooms · 24x7 hot running water",
+        "Shampoo, body soap, handwash",
+        "Toilet paper, towels & hand napkins",
+        "Hairdryer (on request)",
+        ...(selected.hasBathtub ? ["Bathtub in master bathroom"] : []),
+      ],
+    },
+    {
+      title: "Outdoor", icon: Trees,
+      items: [
+        "Open-air rooftop terrace",
+        "Private balcony off master bedroom",
+        "Open backyard",
+        "Plastic chairs & tables for outdoor seating",
+      ],
+    },
+    {
+      title: "Safety & Power", icon: Shield,
+      items: ["Fire extinguisher", "First aid kit", "Inverter backup", "Private entrance · house in society"],
+    },
+    {
+      title: "Parking", icon: Car,
+      items: ["Free parking on premises", "Free on-street parking", "EV charging stations nearby"],
+    },
+    {
+      title: "Location", icon: MapPin,
+      items: [
+        "2 min from Mumbai–Pune Expressway exit",
+        "7–10 min from Lonavala railway station",
+        "Close to Valvan local market",
+        "Luggage drop-off & long-term stays allowed",
+      ],
+    },
+  ];
+
+  const share = () => {
+    if (navigator.share) {
+      navigator.share({ title: selected.name, url: window.location.href }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      toast.success("Link copied");
+    }
+  };
+
+  return (
+    <Layout>
+      {/* HEADER */}
+      <section className="mx-auto max-w-7xl px-4 pt-36 md:px-6 md:pt-40">
+        <Reveal>
+          <BookingWarning className="mb-6" />
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h1 className="font-display text-3xl md:text-5xl">{selected.name}</h1>
+              <p className="mt-1 text-sm text-muted-foreground md:text-base">{selected.tagline}</p>
+              <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+                <span className="inline-flex items-center gap-1">
+                  <Star className="h-4 w-4 fill-primary text-primary" /> 4.9 · Highly rated
+                </span>
+                <span className="hidden md:inline">·</span>
+                <span className="inline-flex items-center gap-1">
+                  <MapPin className="h-4 w-4 text-primary" /> Lonavala, Maharashtra
+                </span>
+                <span className="hidden md:inline">·</span>
+                <span className="inline-flex items-center gap-1">
+                  <Users className="h-4 w-4 text-primary" /> Up to 10 guests
+                </span>
+              </div>
             </div>
-          </div>
-          <div className="flex gap-2">
-            <button onClick={share} className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm hover:border-primary hover:text-primary">
+            <button onClick={share} className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm hover:border-primary hover:text-primary">
               <Share2 className="h-4 w-4" /> Share
             </button>
-            <button
-              onClick={() => toast.success("Saved to favourites")}
-              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm hover:border-primary hover:text-primary"
-            >
-              <Heart className="h-4 w-4" /> Save
-            </button>
           </div>
-        </div>
-      </Reveal>
-
-      {/* AIRBNB-STYLE PHOTO MOSAIC */}
-      <Reveal delay={0.1}>
-        <div className="mt-6 grid grid-cols-4 grid-rows-2 gap-2 overflow-hidden rounded-3xl md:gap-3">
-          <Link
-            to="/gallery"
-            className="group relative col-span-4 row-span-2 h-[280px] overflow-hidden md:col-span-2 md:h-[520px]"
-          >
-            <img src={images.exterior1} alt="Villa façade" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-          </Link>
-          {[images.living2, images.bedroom5, images.kitchen2, images.bath1].map((src, i) => (
-            <Link
-              key={i}
-              to="/gallery"
-              className={`group relative hidden overflow-hidden md:block ${i % 2 === 0 ? "" : ""}`}
-              style={{ height: "256px" }}
-            >
-              <img src={src} alt="Villa" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              {i === 3 && (
-                <span className="absolute bottom-3 right-3 rounded-full bg-background/90 px-4 py-2 text-xs font-semibold shadow-warm">
-                  Show all photos
-                </span>
-              )}
-            </Link>
-          ))}
-        </div>
-      </Reveal>
-    </section>
-
-    {/* OVERVIEW + STICKY BOOKING CARD */}
-    <section className="mx-auto grid max-w-7xl gap-10 px-4 py-16 md:px-6 lg:grid-cols-[1.6fr_1fr]">
-      <div>
-        <Reveal>
-          <h2 className="font-display text-3xl md:text-4xl">Entire townhouse hosted by Off The Grid</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            10 guests · 2 bedrooms · 3 bathrooms · Open terrace · BBQ
-          </p>
         </Reveal>
 
-        <Reveal delay={0.05}>
-          <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">
-            {highlights.map((h) => (
-              <div key={h.label} className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-all hover:border-primary hover:shadow-warm">
-                <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary/10 text-primary">
-                  <h.icon className="h-5 w-5" />
-                </span>
-                <div className="text-sm font-medium">{h.label}</div>
-              </div>
+        {/* PHOTO MOSAIC */}
+        <Reveal delay={0.1}>
+          <div className="mt-6 grid grid-cols-4 grid-rows-2 gap-2 overflow-hidden rounded-3xl md:gap-3">
+            <Link to="/gallery" className="group relative col-span-4 row-span-2 h-[280px] overflow-hidden md:col-span-2 md:h-[520px]">
+              <img src={selected.hero} alt={`${selected.name} façade`} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            </Link>
+            {selected.mosaic.map((src, i) => (
+              <Link key={i} to="/gallery" className="group relative hidden overflow-hidden md:block" style={{ height: "256px" }}>
+                <img src={src} alt="Villa" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                {i === selected.mosaic.length - 1 && (
+                  <span className="absolute bottom-3 right-3 rounded-full bg-background/90 px-4 py-2 text-xs font-semibold shadow-warm">
+                    Show all photos
+                  </span>
+                )}
+              </Link>
             ))}
           </div>
         </Reveal>
+      </section>
 
-        <Reveal delay={0.1}>
-          <div className="mt-12 space-y-5 text-[15px] leading-relaxed text-foreground/80">
-            <p>
-              We're calling our place <span className="font-semibold text-foreground">Off The Grid</span> &
-              there's a good reason for that. The idea behind this passion project is to encourage
-              quality time & conversations with friends & family. It's when being busy just doesn't
-              count as an excuse to live.
-            </p>
-            <p>
-              The place has an open-air rooftop where you could grill, smoke a sheesha, or even get
-              wet if it's rainy season. There's table tennis, badminton, carrom & quite a few board
-              games. A fully functional kitchen with a gas stove, fridge, bone-china crockery and
-              basic utensils. Digital detox is encouraged.
-            </p>
-            <Link to="/villa" className="inline-block border-b border-foreground pb-0.5 text-sm font-semibold hover:text-primary hover:border-primary">
-              Read more about the space →
-            </Link>
-          </div>
-        </Reveal>
-      </div>
+      {/* OVERVIEW + CTA CARD */}
+      <section className="mx-auto grid max-w-7xl gap-10 px-4 py-16 md:px-6 lg:grid-cols-[1.6fr_1fr]">
+        <div>
+          <Reveal>
+            <h2 className="font-display text-3xl md:text-4xl">Entire townhouse · {selected.shortName}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">10 guests · 2 bedrooms · 3 bathrooms · Open terrace · BBQ</p>
+          </Reveal>
 
-      {/* Sticky booking enquiry */}
-      <Reveal delay={0.15}>
-        <aside className="lg:sticky lg:top-28 self-start">
-          <div className="rounded-3xl border border-border bg-card p-6 shadow-card md:p-8">
-            <div className="flex items-baseline gap-2">
-              <span className="font-display text-3xl">₹12,500</span>
-              <span className="text-sm text-muted-foreground">/ night</span>
-            </div>
-            <p className="mt-1 text-xs text-muted-foreground">Excludes refundable deposit of ₹7,000</p>
-
-            <div className="mt-6 space-y-3">
-              <a href={`tel:${PHONE}`} className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-primary bg-background py-3.5 text-sm font-semibold text-primary transition hover:bg-primary/5">
-                <Phone className="h-4 w-4" /> Call Now
-              </a>
-              <a href={WHATSAPP} target="_blank" rel="noreferrer" className="flex w-full items-center justify-center gap-2 rounded-full bg-primary-gradient py-3.5 text-sm font-semibold text-primary-foreground shadow-warm transition hover:scale-[1.02]">
-                <MessageCircle className="h-4 w-4" /> Enquire on WhatsApp
-              </a>
-              <Link to="/booking" className="block w-full rounded-full border border-border py-3.5 text-center text-sm font-semibold hover:border-primary hover:text-primary">
-                Check Dates
-              </Link>
-            </div>
-
-            <ul className="mt-6 space-y-2 border-t border-border pt-5 text-xs text-muted-foreground">
-              <li>· Check-in 1:00 PM – 9:00 PM</li>
-              <li>· Check-out 11:00 AM</li>
-              <li>· Self check-in · Free cancellation up to 7 days</li>
-            </ul>
-          </div>
-        </aside>
-      </Reveal>
-    </section>
-
-    {/* GUEST VOICES */}
-    <section className="border-t border-border bg-muted/30 py-20">
-      <div className="mx-auto max-w-7xl px-4 md:px-6">
-        <Reveal>
-          <div className="flex items-baseline gap-2">
-            <Star className="h-6 w-6 fill-primary text-primary" />
-            <h2 className="font-display text-3xl md:text-4xl">4.9 · 120+ guest reviews</h2>
-          </div>
-        </Reveal>
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {[
-            { n: "Aanya & Rohit", q: "Felt like our own home. Quiet, clean and very comfortable." },
-            { n: "The Mehras", q: "Simple, well-kept villa. Kids loved the terrace and games. We'll be back." },
-            { n: "Kabir", q: "No fuss, no over-the-top promises. Exactly what we needed for the weekend." },
-          ].map((t, i) => (
-            <Reveal key={t.n} delay={i * 0.08}>
-              <div className="h-full rounded-3xl border border-border bg-card p-6 shadow-warm">
-                <div className="flex gap-1 text-primary">
-                  {Array.from({ length: 5 }).map((_, k) => <Star key={k} className="h-4 w-4 fill-current" />)}
+          <Reveal delay={0.05}>
+            <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3">
+              {quickHighlights.map((h) => (
+                <div key={h.label} className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4">
+                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-primary/10 text-primary">
+                    <h.icon className="h-5 w-5" />
+                  </span>
+                  <div className="text-sm font-medium">{h.label}</div>
                 </div>
-                <p className="mt-4 text-[15px] leading-relaxed">"{t.q}"</p>
-                <div className="mt-6 text-sm font-semibold">— {t.n}</div>
+              ))}
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div className="mt-12 space-y-5 text-[15px] leading-relaxed text-foreground/80">
+              <p>{selected.intro}</p>
+              <p>
+                We're calling our place <span className="font-semibold text-foreground">Off The Grid</span> &
+                there's a good reason for that. The idea behind this passion project is to encourage quality
+                time & conversations with friends & family. It's when being busy just doesn't count as an
+                excuse to live.
+              </p>
+              <p>
+                There's high-speed Wi-Fi, a 40" Smart Android TV, table tennis, badminton, carrom & quite a
+                few board & card games. Sheesha (carry your own flavours) & a real coal grill for the DIY
+                types (coal is chargeable). An open-air rooftop where you can grill, smoke a sheesha, or even
+                get wet in the rains. Digital detox is encouraged.
+              </p>
+              <p>
+                Fully furnished kitchen with gas stove, refrigerator, bone-china crockery, cutlery & basic
+                utensils. <span className="font-medium text-foreground">No condiments or food items are provided.</span>{" "}
+                Hotel-style amenities: toiletries, towels, 20 litres of free mineral water per night, 6" foam
+                mattresses & 4" extra mattresses.
+              </p>
+              <p>
+                Townhouse layout — living + dining + kitchen + a bathroom on the ground floor. Two bedrooms
+                with attached bathrooms on the first floor. Open-air terrace above. About 7–10 minutes from
+                Lonavala railway station and a couple of minutes from EV charging stations.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+
+        {/* Sticky CTA card — NO PRICE */}
+        <Reveal delay={0.15}>
+          <aside className="lg:sticky lg:top-40 self-start">
+            <div className="rounded-3xl border border-border bg-card p-6 shadow-card md:p-8">
+              <div className="text-xs uppercase tracking-widest text-primary">Enquire & Book</div>
+              <div className="mt-2 font-display text-2xl">Talk to us directly</div>
+              <p className="mt-2 text-sm text-muted-foreground">
+                We don't accept online payments — bookings are confirmed by call or WhatsApp.
+              </p>
+
+              <BookingWarning className="mt-5" />
+
+              <div className="mt-5 space-y-3">
+                <a href={wa} target="_blank" rel="noreferrer" className="flex w-full items-center justify-center gap-2 rounded-full bg-primary-gradient py-3.5 text-sm font-semibold text-primary-foreground shadow-warm transition hover:scale-[1.02]">
+                  <MessageCircle className="h-4 w-4" /> Book via WhatsApp
+                </a>
+                <a href={`tel:${PHONE}`} className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-primary bg-background py-3.5 text-sm font-semibold text-primary transition hover:bg-primary/5">
+                  <Phone className="h-4 w-4" /> Call Now
+                </a>
+                <Link to="/availability" className="block w-full rounded-full border border-border py-3.5 text-center text-sm font-semibold hover:border-primary hover:text-primary">
+                  Check Availability
+                </Link>
+              </div>
+
+              <ul className="mt-6 space-y-2 border-t border-border pt-5 text-xs text-muted-foreground">
+                <li>· Check-in 1:00 PM – 9:00 PM</li>
+                <li>· Check-out 11:00 AM</li>
+                <li>· Refundable deposit: ₹7,000 before check-in</li>
+              </ul>
+            </div>
+          </aside>
+        </Reveal>
+      </section>
+
+      {/* AMENITIES (merged into Home) */}
+      <section className="border-t border-border bg-muted/30">
+        <div className="mx-auto max-w-7xl px-4 py-20 md:px-6">
+          <Reveal>
+            <div className="text-xs uppercase tracking-[0.4em] text-primary">What this place offers</div>
+            <h2 className="mt-3 font-display text-3xl md:text-4xl">Amenities</h2>
+          </Reveal>
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {amenityGroups.map((g, gi) => (
+              <Reveal key={g.title} delay={gi * 0.04}>
+                <div className="h-full rounded-3xl border border-border bg-card p-7">
+                  <div className="flex items-center gap-3">
+                    <span className="grid h-11 w-11 place-items-center rounded-2xl bg-primary/10 text-primary">
+                      <g.icon className="h-5 w-5" />
+                    </span>
+                    <div className="font-display text-xl">{g.title}</div>
+                  </div>
+                  <ul className="mt-5 space-y-2.5">
+                    {g.items.map((it) => (
+                      <li key={it} className="flex items-start gap-2.5 text-sm text-foreground/80">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> {it}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FOOD SERVICES */}
+      <section className="mx-auto max-w-7xl px-4 py-20 md:px-6">
+        <Reveal>
+          <div className="text-xs uppercase tracking-[0.4em] text-primary">Food & Meals</div>
+          <h2 className="mt-3 font-display text-3xl md:text-4xl">Food Services</h2>
+          <p className="mt-3 max-w-3xl text-foreground/80">
+            We don't provide cooked meals as part of the booking. The house has a fully functional kitchen
+            with stove, fridge, cutlery and basic utensils. <span className="font-medium text-foreground">No food items or condiments are provided.</span>{" "}
+            Guests can carry their own food (heat & eat), cook their own meals, eat out at the many nearby
+            options (from 5-stars to dhabas), or order in — Zomato delivers across Lonavala.
+          </p>
+          <p className="mt-3 max-w-3xl text-sm text-foreground/70">
+            We'd recommend planning limited cooking — the kitchen has basic utensils and isn't set up for
+            large gatherings or full meals.
+          </p>
+        </Reveal>
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {[
+            { i: ChefHat, t: "Cook your own", d: "Carry groceries or heat & eat. Bone-china crockery and basic utensils provided. No condiments." },
+            { i: ShoppingBag, t: "Order in / Eat out", d: "Zomato delivers from across Lonavala. Several dhabas to 5-star restaurants close by." },
+            { i: Utensils, t: "Caretaker cooking (optional)", d: "Our caretaker offers cooking on her own charges, based on group size. Arrange with her directly post-booking — we don't get involved there." },
+          ].map((c) => (
+            <Reveal key={c.t}>
+              <div className="h-full rounded-3xl border border-border bg-card p-6">
+                <span className="grid h-11 w-11 place-items-center rounded-2xl bg-secondary/15 text-secondary">
+                  <c.i className="h-5 w-5" />
+                </span>
+                <div className="mt-4 font-display text-xl">{c.t}</div>
+                <p className="mt-2 text-sm text-foreground/80">{c.d}</p>
               </div>
             </Reveal>
           ))}
         </div>
-      </div>
-    </section>
-  </Layout>
-);
+      </section>
+
+      {/* BOOKING INFO */}
+      <section className="border-t border-border bg-muted/30">
+        <div className="mx-auto max-w-7xl px-4 py-20 md:px-6">
+          <Reveal>
+            <h2 className="font-display text-3xl md:text-4xl">Check-in, Check-out & Booking</h2>
+            <p className="mt-2 text-muted-foreground">Please read carefully before booking.</p>
+          </Reveal>
+          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              { i: LogIn, t: "Check-in", d: "1:00 PM – 9:00 PM" },
+              { i: LogOut, t: "Check-out", d: "By 11:00 AM" },
+              { i: Users, t: "Max guests", d: "10 guests maximum" },
+              { i: CreditCard, t: "Refundable deposit", d: "₹7,000 before check-in" },
+              { i: IdCard, t: "ID required", d: "Photo with Address ID — Driving Licence or Aadhar. International guests must share passport copies." },
+              { i: CalendarX, t: "Cancellation policy", d: "100% refund 7+ days before · 50% between 7–4 days · 0% within 3 days of check-in." },
+            ].map((c) => (
+              <Reveal key={c.t}>
+                <div className="h-full rounded-3xl border border-border bg-card p-6">
+                  <span className="grid h-11 w-11 place-items-center rounded-2xl bg-primary/10 text-primary">
+                    <c.i className="h-5 w-5" />
+                  </span>
+                  <div className="mt-4 font-display text-xl">{c.t}</div>
+                  <p className="mt-2 text-sm text-foreground/80">{c.d}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* HOUSE RULES */}
+      <section className="mx-auto max-w-7xl px-4 py-20 md:px-6">
+        <Reveal>
+          <h2 className="font-display text-3xl md:text-4xl">House Rules</h2>
+        </Reveal>
+        <ul className="mt-6 grid gap-3 md:grid-cols-2">
+          {[
+            "No parties or loud music",
+            "No commercial shoots or commercial events",
+            "Birthday celebrations — please get in touch before booking",
+            "No pets allowed",
+            "Damages are chargeable",
+          ].map((r) => (
+            <li key={r} className="flex items-start gap-3 rounded-2xl border border-border bg-card p-4 text-sm text-foreground/80">
+              <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary" /> {r}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="border-t border-border bg-muted/30 py-16">
+        <div className="mx-auto flex max-w-4xl flex-col items-center gap-5 px-6 text-center">
+          <h2 className="font-display text-3xl md:text-4xl">Ready to book {selected.shortName}?</h2>
+          <p className="text-muted-foreground">Call or WhatsApp — we confirm availability directly.</p>
+          <BookingWarning />
+          <div className="flex flex-wrap justify-center gap-3">
+            <a href={`tel:${PHONE}`} className="inline-flex items-center gap-2 rounded-full border-2 border-primary px-6 py-3 text-sm font-semibold text-primary hover:bg-primary/5">
+              <Phone className="h-4 w-4" /> Call Now
+            </a>
+            <a href={wa} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-primary-gradient px-6 py-3 text-sm font-semibold text-primary-foreground shadow-warm hover:scale-[1.02]">
+              <MessageCircle className="h-4 w-4" /> WhatsApp Us
+            </a>
+          </div>
+        </div>
+      </section>
+    </Layout>
+  );
+};
 
 export default Home;
