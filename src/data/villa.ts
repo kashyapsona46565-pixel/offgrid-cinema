@@ -17,40 +17,25 @@ import kitchen1 from "@/assets/kitchen-1.jpg";
 import kitchen2 from "@/assets/kitchen-2.jpg";
 import kitchen3 from "@/assets/kitchen-3.jpg";
 
-export const images = {
-  exterior1, exterior2, bath1, bath2, bath3,
-  bedroom1, bedroom2, bedroom3, bedroom4, bedroom5, bedroom6, bedroom7,
-  living1, living2, living3, kitchen1, kitchen2, kitchen3,
+// === Owner contact ===
+export const PHONE = "+918291572887";
+export const PHONE_DISPLAY = "+91 82915 72887";
+export const WHATSAPP_NUMBER = "918291572887";
+
+export const buildWhatsApp = (property: string, extra = "") => {
+  const base = `Hi, I'd like to enquire about ${property}.`;
+  const msg = extra ? `${base}%0A${extra}` : base;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURI(msg).replace(/%2520/g, "%20")}`;
 };
 
-export const gallery = [
-  { src: exterior1, label: "Villa Façade" },
-  { src: living2, label: "Grand Living & Dining" },
-  { src: bedroom5, label: "Master Bedroom" },
-  { src: living1, label: "Lounge with Smart TV" },
-  { src: bath1, label: "Spa Bath" },
-  { src: exterior2, label: "Mountain Approach" },
-  { src: kitchen2, label: "Open Kitchen" },
-  { src: bedroom2, label: "Garden Bedroom" },
-  { src: living3, label: "Marble Dining Hall" },
-  { src: bath2, label: "Powder Room" },
-  { src: bedroom4, label: "Marble Suite" },
-  { src: kitchen1, label: "Stocked Pantry" },
-  { src: bath3, label: "Indigo Bath" },
-  { src: bedroom6, label: "Plaid Suite" },
-  { src: bedroom1, label: "Lounge Bedroom" },
-  { src: kitchen3, label: "Chef's Corner" },
-  { src: bedroom3, label: "Twilight Suite" },
-  { src: bedroom7, label: "Indigo Bedroom" },
-];
+// === Address (placeholder — owner to confirm exact pin) ===
+export const ADDRESS_LINE = "Off The Grid Villas, Near Valvan, Lonavala, Maharashtra 410401";
+export const MAPS_URL =
+  "https://www.google.com/maps/search/?api=1&query=Off+The+Grid+Villas+Lonavala";
+export const MAPS_EMBED =
+  "https://maps.google.com/maps?q=Lonavala+Valvan+Maharashtra&z=15&output=embed";
 
-export const WHATSAPP =
-  "https://wa.me/919999999999?text=Hi%20I'd%20like%20to%20book%20Off%20The%20Grid%20villa";
-
-export const PHONE = "+919999999999";
-export const PHONE_DISPLAY = "+91 99999 99999";
-export const MAPS_URL = "https://maps.google.com/?q=Lonavala+Maharashtra";
-
+// === Gallery categories ===
 export const galleryCategories = [
   "All",
   "Living",
@@ -59,37 +44,105 @@ export const galleryCategories = [
   "Bathrooms",
   "Outdoor",
 ] as const;
-
 export type GalleryCategory = (typeof galleryCategories)[number];
 
-export const galleryWithCategory: { src: string; label: string; category: Exclude<GalleryCategory, "All"> }[] = [
-  { src: exterior1, label: "Villa Façade", category: "Outdoor" },
-  { src: exterior2, label: "Approach", category: "Outdoor" },
-  { src: living1, label: "Living Lounge", category: "Living" },
-  { src: living2, label: "Living & Dining", category: "Living" },
-  { src: living3, label: "Dining Hall", category: "Living" },
-  { src: bedroom1, label: "Master Bedroom", category: "Bedrooms" },
-  { src: bedroom2, label: "Garden Bedroom", category: "Bedrooms" },
-  { src: bedroom3, label: "Twilight Suite", category: "Bedrooms" },
-  { src: bedroom4, label: "Marble Suite", category: "Bedrooms" },
-  { src: bedroom5, label: "Master Suite", category: "Bedrooms" },
-  { src: bedroom6, label: "Plaid Suite", category: "Bedrooms" },
-  { src: bedroom7, label: "Indigo Bedroom", category: "Bedrooms" },
-  { src: kitchen1, label: "Stocked Pantry", category: "Kitchen" },
-  { src: kitchen2, label: "Open Kitchen", category: "Kitchen" },
-  { src: kitchen3, label: "Chef's Corner", category: "Kitchen" },
-  { src: bath1, label: "Bath", category: "Bathrooms" },
-  { src: bath2, label: "Powder Room", category: "Bathrooms" },
-  { src: bath3, label: "Indigo Bath", category: "Bathrooms" },
+type Photo = { src: string; label: string; category: Exclude<GalleryCategory, "All"> };
+
+// === Two properties ===
+export type PropertyId = "otg1" | "otg2";
+
+export type Property = {
+  id: PropertyId;
+  name: string;
+  shortName: string;
+  tagline: string;
+  intro: string;
+  highlights: string[];
+  hero: string;
+  mosaic: string[];
+  photos: Photo[];
+  hasBathtub: boolean;
+};
+
+const baseHighlights = [
+  '40" Smart Android TV',
+  "High Speed Wi-Fi",
+  "Free Sheesha (carry your own flavours)",
+  "BBQ Grill (coal chargeable)",
+  "Badminton · Carrom · Table Tennis · Board & Card Games",
+  "Free mineral water (20 litres / night)",
+  "Toiletries (soap, shampoo, towels, napkins)",
+  "Inverter backup",
+  "Air-Conditioned 2BHK · 3 Bathrooms · Open Terrace",
 ];
 
-// Demo blocked dates (would be parsed from Airbnb .ics)
-export const blockedDates: string[] = (() => {
+const introCommon =
+  "A quiet weekend getaway close to the expressway, markets & restaurants. A spacious fully furnished 2-BHK with A/C bedrooms & a fully functional kitchen.";
+
+export const properties: Record<PropertyId, Property> = {
+  otg1: {
+    id: "otg1",
+    name: "Off The Grid Villas Lonavala 1",
+    shortName: "Off The Grid - 1",
+    tagline: "Private 2BHK villa · with bathtub",
+    intro: introCommon,
+    highlights: [...baseHighlights, "Bathtub in master bathroom"],
+    hero: exterior1,
+    mosaic: [living1, bedroom4, kitchen1, bath1],
+    photos: [
+      { src: exterior1, label: "Villa Façade", category: "Outdoor" },
+      { src: living1, label: "Living Lounge", category: "Living" },
+      { src: living3, label: "Dining Hall", category: "Living" },
+      { src: bedroom1, label: "Master Bedroom", category: "Bedrooms" },
+      { src: bedroom4, label: "Marble Suite", category: "Bedrooms" },
+      { src: bedroom6, label: "Plaid Suite", category: "Bedrooms" },
+      { src: bedroom3, label: "Twilight Suite", category: "Bedrooms" },
+      { src: kitchen1, label: "Stocked Pantry", category: "Kitchen" },
+      { src: kitchen3, label: "Chef's Corner", category: "Kitchen" },
+      { src: bath1, label: "Bathroom with Bathtub", category: "Bathrooms" },
+      { src: bath3, label: "Indigo Bath", category: "Bathrooms" },
+    ],
+    hasBathtub: true,
+  },
+  otg2: {
+    id: "otg2",
+    name: "Off The Grid Villas Lonavala 2",
+    shortName: "Off The Grid - 2",
+    tagline: "Private 2BHK villa · open terrace",
+    intro: introCommon,
+    highlights: baseHighlights,
+    hero: exterior2,
+    mosaic: [living2, bedroom5, kitchen2, bath2],
+    photos: [
+      { src: exterior2, label: "Villa Approach", category: "Outdoor" },
+      { src: living2, label: "Living & Dining", category: "Living" },
+      { src: bedroom5, label: "Master Suite", category: "Bedrooms" },
+      { src: bedroom2, label: "Garden Bedroom", category: "Bedrooms" },
+      { src: bedroom7, label: "Indigo Bedroom", category: "Bedrooms" },
+      { src: kitchen2, label: "Open Kitchen", category: "Kitchen" },
+      { src: bath2, label: "Powder Room", category: "Bathrooms" },
+    ],
+    hasBathtub: false,
+  },
+};
+
+export const propertyList: Property[] = [properties.otg1, properties.otg2];
+
+// === Demo blocked dates (per property) ===
+const buildBlocked = (offsets: [number, number][]) => {
   const out: string[] = [];
   const today = new Date();
-  const add = (d: Date) => out.push(d.toISOString().slice(0, 10));
-  for (let i = 3; i < 6; i++) { const d = new Date(today); d.setDate(d.getDate() + i); add(d); }
-  for (let i = 12; i < 15; i++) { const d = new Date(today); d.setDate(d.getDate() + i); add(d); }
-  for (let i = 22; i < 25; i++) { const d = new Date(today); d.setDate(d.getDate() + i); add(d); }
+  offsets.forEach(([a, b]) => {
+    for (let i = a; i < b; i++) {
+      const d = new Date(today);
+      d.setDate(d.getDate() + i);
+      out.push(d.toISOString().slice(0, 10));
+    }
+  });
   return out;
-})();
+};
+
+export const blockedByProperty: Record<PropertyId, string[]> = {
+  otg1: buildBlocked([[3, 6], [14, 17], [25, 28]]),
+  otg2: buildBlocked([[5, 9], [18, 21]]),
+};
