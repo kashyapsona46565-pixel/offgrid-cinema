@@ -31,68 +31,83 @@ const Home = () => {
     {
       title: "Entertainment", icon: Tv,
       items: [
-        '40" Smart Android TV', "High-speed Wi-Fi",
-        "Free Sheesha (carry your own flavours)",
-        "BBQ grill with iron skewers (coal chargeable)",
-        "Table Tennis · Badminton · Carrom",
-        "Board Games · Card Games",
+        "Board Games",
+        "Card Games",
+        "Carrom",
+        "Badminton",
+        "Table Tennis",
+        "Free Sheesha with natural coal (carry your own flavours)",
       ],
     },
     {
       title: "Kitchen & Dining", icon: Utensils,
       items: [
-        "Gas stove", "Refrigerator",
-        "Bone-china crockery & cutlery",
-        "Basic utensils: pots, pans, tava, tea & milk vessels",
-        "20 litres mineral water (included per night)",
+        "Stove",
+        "Refrigerator",
+        "Basic utensils: Pots, pans, tea vessel, milk vessel, tava etc",
+        "Bone-china crockery and cutlery",
+        "20-litres of mineral water (included in cost)",
         "Barbecue grill & iron skewers",
       ],
     },
     {
       title: "Bedroom & Linen", icon: Bed,
       items: [
-        "Two A/C bedrooms with attached bathrooms",
-        "Bedsheets with duvets",
-        "Extra pillows & blankets",
-        "Mosquito nets · clothes storage · hangers",
-        'High quality 6" foam mattresses + 4" extras',
-        "Iron & drying rack (on request)",
+        "Bed sheets with duvets",
+        "Hangers",
+        "Extra pillows and blankets",
+        "Iron (on request)",
+        "Clothes drying rack",
+        "Mosquito net",
+        "Clothes storage",
       ],
     },
     {
       title: "Bathroom", icon: Bath,
       items: [
-        "3 bathrooms · 24x7 hot running water",
-        "Shampoo, body soap, handwash",
-        "Toilet paper, towels & hand napkins",
+        "24x7 hot running water",
         "Hairdryer (on request)",
-        ...(selected.hasBathtub ? ["Bathtub in master bathroom"] : []),
+        "Handwash",
+        "Shampoo",
+        "Body soap",
+        "Toilet Paper",
+        "Towels",
+        "Hand napkins",
       ],
+    },
+    {
+      title: "Home Safety", icon: Shield,
+      items: ["Fire extinguisher", "First aid kit"],
     },
     {
       title: "Outdoor", icon: Trees,
       items: [
-        "Open-air rooftop terrace",
-        "Private balcony off master bedroom",
+        "Private balcony attached to Master Bedroom",
+        "Open air Terrace",
         "Open backyard",
-        "Plastic chairs & tables for outdoor seating",
       ],
     },
     {
-      title: "Safety & Power", icon: Shield,
-      items: ["Fire extinguisher", "First aid kit", "Inverter backup", "Private entrance · house in society"],
+      title: "Parking & Facilities", icon: Car,
+      items: ["Free parking on premises", "Free on-street parking"],
     },
     {
-      title: "Parking", icon: Car,
-      items: ["Free parking on premises", "Free on-street parking", "EV charging stations nearby"],
-    },
-    {
-      title: "Location", icon: MapPin,
+      title: "Services", icon: ShoppingBag,
       items: [
-        "2 min from Mumbai–Pune Expressway exit",
-        "7–10 min from Lonavala railway station",
-        "Close to Valvan local market",
-        "Luggage drop-off & long-term stays allowed",
+        "Luggage drop-off allowed — for guests' convenience when arriving early or departing late",
+        "Long-term stays allowed",
+      ],
+    },
+    {
+      title: "Location Features", icon: MapPin,
+      items: [
+        "Private entrance",
+        "House is situated in a society",
+        "Close to the railway station — 7-10 mins",
+        "Close to the Lonavala express-way exit — 2 mins",
+        "Close to the local market of Valvan where all groceries are available",
+        "Close to restaurants and strategically located for easy access to tourist spots",
+        "Close to electric charging stations of Lonavala — couple of minutes",
       ],
     },
   ];
@@ -317,9 +332,8 @@ const Home = () => {
               { i: LogIn, t: "Check-in", d: "1:00 PM – 9:00 PM" },
               { i: LogOut, t: "Check-out", d: "By 11:00 AM" },
               { i: Users, t: "Max guests", d: "10 guests maximum" },
-              { i: CreditCard, t: "Refundable deposit", d: "₹7,000 before check-in" },
+              { i: CreditCard, t: "Refundable deposit", d: "₹7,000 before check-in. Returned in full if there's no damage. Pay in cash on location or digitally — digital refunds within 1–4 hours of checkout." },
               { i: IdCard, t: "ID required", d: "Photo with Address ID — Driving Licence or Aadhar. International guests must share passport copies." },
-              { i: CalendarX, t: "Cancellation policy", d: "100% refund 7+ days before · 50% between 7–4 days · 0% within 3 days of check-in." },
             ].map((c) => (
               <Reveal key={c.t}>
                 <div className="h-full rounded-3xl border border-border bg-card p-6">
@@ -332,6 +346,32 @@ const Home = () => {
               </Reveal>
             ))}
           </div>
+
+          {/* Cancellation Policy with examples */}
+          <Reveal>
+            <div className="mt-10 rounded-3xl border border-border bg-card p-7">
+              <div className="flex items-center gap-3">
+                <span className="grid h-11 w-11 place-items-center rounded-2xl bg-primary/10 text-primary">
+                  <CalendarX className="h-5 w-5" />
+                </span>
+                <div className="font-display text-xl">Cancellation Policy</div>
+              </div>
+              <ul className="mt-5 space-y-5 text-sm text-foreground/80">
+                <li>
+                  <div className="font-semibold text-foreground">100% Refund — 7 days or more before check-in date</div>
+                  <div className="mt-1 text-foreground/70">Example: Your booking is on the 8th January, Saturday. Cancellation must happen before 11:59 PM of 1st January, Saturday.</div>
+                </li>
+                <li>
+                  <div className="font-semibold text-foreground">50% Refund — Between 7 days to 4 days before check-in date</div>
+                  <div className="mt-1 text-foreground/70">Example: Your booking is on the 8th January, Saturday. Cancellation must fall between 12:00 AM of 2nd January, Sunday and 11:59 PM of 4th January, Tuesday.</div>
+                </li>
+                <li>
+                  <div className="font-semibold text-foreground">0% Refund — 3 days before check-in date</div>
+                  <div className="mt-1 text-foreground/70">Example: Your booking is on the 8th January, Saturday. Cancellation happens after 12:00 AM of 4th January, Wednesday.</div>
+                </li>
+              </ul>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -358,16 +398,18 @@ const Home = () => {
       {/* FINAL CTA */}
       <section className="border-t border-border bg-muted/30 py-16">
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-5 px-6 text-center">
-          <h2 className="font-display text-3xl md:text-4xl">Ready to book {selected.shortName}?</h2>
-          <p className="text-muted-foreground">Call or WhatsApp — we confirm availability directly.</p>
-          <BookingWarning />
+          <h2 className="font-display text-3xl md:text-4xl">Ready to Book {selected.shortName}?</h2>
+          <p className="text-muted-foreground">Reach us on WhatsApp or call — we'll be happy to help.</p>
           <div className="flex flex-wrap justify-center gap-3">
+            <a href={wa} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-primary-gradient px-6 py-3 text-sm font-semibold text-primary-foreground shadow-warm hover:scale-[1.02]">
+              <MessageCircle className="h-4 w-4" /> Book on WhatsApp
+            </a>
             <a href={`tel:${PHONE}`} className="inline-flex items-center gap-2 rounded-full border-2 border-primary px-6 py-3 text-sm font-semibold text-primary hover:bg-primary/5">
               <Phone className="h-4 w-4" /> Call Now
             </a>
-            <a href={wa} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-primary-gradient px-6 py-3 text-sm font-semibold text-primary-foreground shadow-warm hover:scale-[1.02]">
-              <MessageCircle className="h-4 w-4" /> WhatsApp Us
-            </a>
+            <Link to="/availability" className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold hover:border-primary hover:text-primary">
+              Check Availability
+            </Link>
           </div>
         </div>
       </section>
