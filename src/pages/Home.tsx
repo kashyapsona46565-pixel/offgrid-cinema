@@ -16,17 +16,15 @@ const Home = () => {
   const wa = buildWhatsApp(selected.name);
 
   const quickHighlights = [
-    { icon: Wifi, label: "High Speed Wi-Fi" },
     { icon: Tv, label: '40" Smart Android TV' },
-    { icon: Trees, label: "Open Terrace" },
-    { icon: Flame, label: "BBQ Grill" },
-    { icon: Gamepad2, label: "Indoor Games" },
-    { icon: Utensils, label: "Full Kitchen" },
-    { icon: Bath, label: "3 Bathrooms" },
-    { icon: Wind, label: "AC Bedrooms" },
-    { icon: Car, label: "Free Parking" },
-    { icon: Users, label: "Sleeps 10" },
-    ...(selected.hasBathtub ? [{ icon: ShowerHead, label: "Master Bathtub" }] : []),
+    { icon: Wifi, label: "High Speed Wi-Fi" },
+    { icon: Flame, label: "Free Sheesha (get your flavours)" },
+    { icon: Gamepad2, label: "Badminton, Carrom, Table Tennis, Board Games, Card Games etc" },
+    { icon: Utensils, label: "Free mineral water (20 litres)" },
+    { icon: ShowerHead, label: "Toiletries (soaps, shampoos, towels, napkins)" },
+    { icon: Shield, label: "Inverter backup" },
+    { icon: Wind, label: "Air-Conditioned 2BHK with 3 Bathrooms & Open Terrace" },
+    ...(selected.hasBathtub ? [{ icon: Bath, label: "Bath Tub with 1 attached Bathroom" }] : []),
   ];
 
   const amenityGroups = [
@@ -113,14 +111,13 @@ const Home = () => {
       {/* HEADER */}
       <section className="mx-auto max-w-7xl px-4 pt-36 md:px-6 md:pt-40">
         <Reveal>
-          <BookingWarning className="mb-6" />
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <h1 className="font-display text-3xl md:text-5xl">{selected.name}</h1>
               <p className="mt-1 text-sm text-muted-foreground md:text-base">{selected.tagline}</p>
               <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
                 <span className="inline-flex items-center gap-1">
-                  <Star className="h-4 w-4 fill-primary text-primary" /> 4.9 · Highly rated
+                  <Star className="h-4 w-4 fill-primary text-primary" /> 4.8 · Highly rated
                 </span>
                 <span className="hidden md:inline">·</span>
                 <span className="inline-flex items-center gap-1">
@@ -162,8 +159,8 @@ const Home = () => {
       <section className="mx-auto grid max-w-7xl gap-10 px-4 py-16 md:px-6 lg:grid-cols-[1.6fr_1fr]">
         <div>
           <Reveal>
-            <h2 className="font-display text-3xl md:text-4xl">Entire townhouse · {selected.shortName}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">10 guests · 2 bedrooms · 3 bathrooms · Open terrace · BBQ</p>
+            <h2 className="font-display text-3xl md:text-4xl">Entire Villa Private · {selected.shortName}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">10 Guests · 2 Bedrooms · 3 Bathrooms · Open Terrace</p>
           </Reveal>
 
           <Reveal delay={0.05}>
@@ -196,14 +193,14 @@ const Home = () => {
               </p>
               <p>
                 Fully furnished kitchen with gas stove, refrigerator, bone-china crockery, cutlery & basic
-                utensils. <span className="font-medium text-foreground">No condiments or food items are provided.</span>{" "}
-                Hotel-style amenities: toiletries, towels, 20 litres of free mineral water per night, 6" foam
-                mattresses & 4" extra mattresses.
+                utensils. No condiments or food items are provided. Hotel-style amenities: toiletries, towels,
+                20 litres of free mineral water per night, 6" foam mattresses & 4" extra mattresses.
               </p>
               <p>
-                Townhouse layout — living + dining + kitchen + a bathroom on the ground floor. Two bedrooms
-                with attached bathrooms on the first floor. Open-air terrace above. About 7–10 minutes from
-                Lonavala railway station and a couple of minutes from EV charging stations.
+                It's a Villa with a living room with a dining area, kitchen and a Bathroom on the ground floor.
+                The Bedrooms are on the first floor with Bathrooms attached. Above that, there is an open-air
+                Terrace. About 7–10 minutes from Lonavala railway station and a couple of minutes from EV
+                charging stations.
               </p>
             </div>
           </Reveal>
@@ -216,10 +213,9 @@ const Home = () => {
               <div className="text-xs uppercase tracking-widest text-primary">Enquire & Book</div>
               <div className="mt-2 font-display text-2xl">Talk to us directly</div>
               <p className="mt-2 text-sm text-muted-foreground">
-                We don't accept online payments — bookings are confirmed by call or WhatsApp.
+                To check availability or book, please reach us on WhatsApp or call.
               </p>
 
-              <BookingWarning className="mt-5" />
 
               <div className="mt-5 space-y-3">
                 <a href={wa} target="_blank" rel="noreferrer" className="flex w-full items-center justify-center gap-2 rounded-full bg-primary-gradient py-3.5 text-sm font-semibold text-primary-foreground shadow-warm transition hover:scale-[1.02]">
@@ -281,7 +277,7 @@ const Home = () => {
           <h2 className="mt-3 font-display text-3xl md:text-4xl">Food Services</h2>
           <p className="mt-3 max-w-3xl text-foreground/80">
             We don't provide cooked meals as part of the booking. The house has a fully functional kitchen
-            with stove, fridge, cutlery and basic utensils. <span className="font-medium text-foreground">No food items or condiments are provided.</span>{" "}
+            with stove, fridge, cutlery and basic utensils. No food items or condiments are provided.
             Guests can carry their own food (heat & eat), cook their own meals, eat out at the many nearby
             options (from 5-stars to dhabas), or order in — Zomato delivers across Lonavala.
           </p>
