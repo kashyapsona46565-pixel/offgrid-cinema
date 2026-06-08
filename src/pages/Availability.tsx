@@ -31,13 +31,10 @@ const PropertyCalendar = ({ property }: { property: Property }) => {
 
   return (
     <div className="rounded-3xl border border-border bg-card p-6 shadow-warm md:p-8">
-      <div className="mb-2 flex items-center justify-between">
-        <div>
-          <div className="text-xs uppercase tracking-[0.3em] text-primary">{property.shortName}</div>
-          <div className="mt-1 font-display text-xl">{property.name}</div>
-        </div>
+      <div className="mb-5">
+        <div className="text-xs uppercase tracking-[0.3em] text-primary">{property.shortName}</div>
       </div>
-      <p className="mb-5 text-xs text-muted-foreground">Greyed dates are unavailable. Call to confirm.</p>
+
 
       <div className="mb-4 flex items-center justify-between">
         <button onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))}
@@ -101,9 +98,9 @@ const Availability = () => (
     <section className="mx-auto max-w-7xl px-4 pt-36 text-center md:px-6 md:pt-40">
       <Reveal>
         <div className="text-xs uppercase tracking-[0.4em] text-primary">Availability</div>
-        <h1 className="mt-3 font-display text-4xl md:text-5xl">Check our availability</h1>
+        <h1 className="mt-3 font-display text-4xl md:text-5xl">Check Our Availability</h1>
         <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-          We don't offer direct online booking. Pick your dates, then book via WhatsApp or call us.
+          Pick your dates and reach us on WhatsApp or call — we'll be happy to confirm.
         </p>
         <div className="mx-auto mt-6 max-w-xl">
           <BookingWarning />
@@ -121,9 +118,9 @@ const Availability = () => (
 
     <section className="border-t border-border bg-muted/30 py-16">
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-5 px-6 text-center">
-        <h2 className="font-display text-3xl md:text-4xl">Booking is on call & WhatsApp only</h2>
+        <h2 className="font-display text-3xl md:text-4xl">We're Here to Help You Plan</h2>
         <p className="max-w-xl text-muted-foreground">
-          No payment gateway, no booking engine. Just talk to us — quick replies on WhatsApp.
+          For availability and booking, please reach us on WhatsApp or call — we usually reply quickly.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <a href={`tel:${PHONE}`} className="inline-flex items-center gap-2 rounded-full border-2 border-primary px-6 py-3 text-sm font-semibold text-primary hover:bg-primary/5">
@@ -139,3 +136,4 @@ const Availability = () => (
 );
 
 export default Availability;
+

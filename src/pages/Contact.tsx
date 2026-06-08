@@ -1,7 +1,7 @@
 import { Phone, MessageCircle, MapPin, Train, Car, ShoppingBag, Utensils, Zap, Mountain } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import Reveal from "@/components/site/Reveal";
-import BookingWarning from "@/components/site/BookingWarning";
+
 import { PHONE, PHONE_DISPLAY, buildWhatsApp, ADDRESS_LINE, MAPS_URL, MAPS_EMBED } from "@/data/villa";
 import { useProperty } from "@/context/PropertyContext";
 
@@ -27,9 +27,6 @@ const Contact = () => {
           <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
             Lonavala, Maharashtra — minutes from the expressway, market & cafes.
           </p>
-          <div className="mx-auto mt-6 max-w-xl">
-            <BookingWarning />
-          </div>
         </Reveal>
       </section>
 
