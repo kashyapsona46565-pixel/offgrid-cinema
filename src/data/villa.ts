@@ -29,11 +29,11 @@ export const buildWhatsApp = (property: string, extra = "") => {
 };
 
 // === Address (placeholder — owner to confirm exact pin) ===
-export const ADDRESS_LINE = "Off The Grid Villas, Near Valvan, Lonavala, Maharashtra 410401";
+export const ADDRESS_LINE = "Row House No - 7, 8, 9, Khatri Park Co-Op Housing Society, Valvan, Lonavala - 410401";
 export const MAPS_URL =
-  "https://www.google.com/maps/search/?api=1&query=Off+The+Grid+Villas+Lonavala";
+  "https://www.google.com/maps/search/?api=1&query=Khatri+Park+Co-Op+Housing+Society+Valvan+Lonavala+410401";
 export const MAPS_EMBED =
-  "https://maps.google.com/maps?q=Lonavala+Valvan+Maharashtra&z=15&output=embed";
+  "https://maps.google.com/maps?q=Khatri+Park+Co-Op+Housing+Society+Valvan+Lonavala+410401&z=16&output=embed";
 
 // === Gallery categories ===
 export const galleryCategories = [
@@ -67,13 +67,12 @@ export type Property = {
 const baseHighlights = [
   '40" Smart Android TV',
   "High Speed Wi-Fi",
-  "Free Sheesha (carry your own flavours)",
-  "BBQ Grill (coal chargeable)",
-  "Badminton · Carrom · Table Tennis · Board & Card Games",
-  "Free mineral water (20 litres / night)",
-  "Toiletries (soap, shampoo, towels, napkins)",
+  "Free Sheesha (get your flavours)",
+  "Badminton, Carrom, Table Tennis, Board Games, Card Games etc",
+  "Free mineral water (20 litres)",
+  "Toiletries (soaps, shampoos, towels, napkins)",
   "Inverter backup",
-  "Air-Conditioned 2BHK · 3 Bathrooms · Open Terrace",
+  "Air-Conditioned 2BHK with 3 Bathrooms & Open Terrace",
 ];
 
 const introCommon =
@@ -86,7 +85,7 @@ export const properties: Record<PropertyId, Property> = {
     shortName: "Off The Grid - 1",
     tagline: "Private 2BHK villa · with bathtub",
     intro: introCommon,
-    highlights: [...baseHighlights, "Bathtub in master bathroom"],
+    highlights: [...baseHighlights, "Bath Tub with 1 attached Bathroom"],
     hero: exterior1,
     mosaic: [living1, bedroom4, kitchen1, bath1],
     photos: [

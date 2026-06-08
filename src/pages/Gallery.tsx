@@ -24,7 +24,6 @@ const Gallery = () => {
     <Layout>
       <section className="mx-auto max-w-7xl px-4 pt-36 md:px-6 md:pt-40">
         <Reveal>
-          <BookingWarning className="mb-6" />
           <div className="text-xs uppercase tracking-[0.4em] text-primary">Gallery</div>
           <h1 className="mt-3 font-display text-4xl md:text-5xl">{selected.name}</h1>
           <p className="mt-2 text-sm text-muted-foreground">Switch the property above to see its photos.</p>

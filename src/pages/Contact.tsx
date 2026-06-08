@@ -27,9 +27,6 @@ const Contact = () => {
           <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
             Lonavala, Maharashtra — minutes from the expressway, market & cafes.
           </p>
-          <div className="mx-auto mt-6 max-w-xl">
-            <BookingWarning />
-          </div>
         </Reveal>
       </section>
 
