@@ -1,7 +1,7 @@
 import { Phone, MessageCircle, MapPin, Train, Car, ShoppingBag, Utensils, Zap, Mountain } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import Reveal from "@/components/site/Reveal";
-import BookingWarning from "@/components/site/BookingWarning";
+
 import { PHONE, PHONE_DISPLAY, buildWhatsApp, ADDRESS_LINE, MAPS_URL, MAPS_EMBED } from "@/data/villa";
 import { useProperty } from "@/context/PropertyContext";
 

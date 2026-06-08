@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import Reveal from "@/components/site/Reveal";
-import BookingWarning from "@/components/site/BookingWarning";
+
 import { galleryCategories } from "@/data/villa";
 import { useProperty } from "@/context/PropertyContext";
 
