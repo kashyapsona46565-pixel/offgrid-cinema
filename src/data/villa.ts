@@ -1,26 +1,29 @@
-import exterior1 from "@/assets/exterior-1.jpg";
-import exterior2 from "@/assets/exterior-2.jpg";
-import bath1 from "@/assets/bath-1.jpg";
-import bath2 from "@/assets/bath-2.jpg";
-import bath3 from "@/assets/bath-3.jpg";
-import bedroom1 from "@/assets/bedroom-1.jpg";
-import bedroom2 from "@/assets/bedroom-2.jpg";
-import bedroom3 from "@/assets/bedroom-3.jpg";
-import bedroom4 from "@/assets/bedroom-4.jpg";
-import bedroom5 from "@/assets/bedroom-5.jpg";
-import bedroom6 from "@/assets/bedroom-6.jpg";
-import bedroom7 from "@/assets/bedroom-7.jpg";
-import living1 from "@/assets/living-1.jpg";
-import living2 from "@/assets/living-2.jpg";
-import living3 from "@/assets/living-3.jpg";
-import kitchen1 from "@/assets/kitchen-1.jpg";
-import kitchen2 from "@/assets/kitchen-2.jpg";
-import kitchen3 from "@/assets/kitchen-3.jpg";
+import exterior from "@/assets/real-IMG_20260611_153504.jpg.asset.json";
+import bedroomLarge from "@/assets/real-IMG_20260611_153515.jpg.asset.json";
+import livingDining from "@/assets/real-IMG_20260611_153522.jpg.asset.json";
+import kitchen from "@/assets/real-IMG_20260611_153532.jpg.asset.json";
+import bedroomChecked from "@/assets/real-IMG_20260611_153540.jpg.asset.json";
+import bathtub from "@/assets/real-IMG_20260611_153551.jpg.asset.json";
+import bedroomBlue from "@/assets/real-IMG_20260611_153559.jpg.asset.json";
+import bathroom from "@/assets/real-IMG_20260611_153608.jpg.asset.json";
+
+const IMG = {
+  exterior: exterior.url,
+  bedroomLarge: bedroomLarge.url,
+  livingDining: livingDining.url,
+  kitchen: kitchen.url,
+  bedroomChecked: bedroomChecked.url,
+  bathtub: bathtub.url,
+  bedroomBlue: bedroomBlue.url,
+  bathroom: bathroom.url,
+};
 
 // === Owner contact ===
 export const PHONE = "+918291572887";
 export const PHONE_DISPLAY = "+91 82915 72887";
 export const WHATSAPP_NUMBER = "918291572887";
+export const CALL_HOURS = "10 AM – 9 PM";
+export const WHATSAPP_HOURS = "24/7";
 
 export const buildWhatsApp = (property: string, extra = "") => {
   const base = `Hi, I'd like to enquire about ${property}.`;
@@ -28,12 +31,12 @@ export const buildWhatsApp = (property: string, extra = "") => {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURI(msg).replace(/%2520/g, "%20")}`;
 };
 
-// === Address (placeholder — owner to confirm exact pin) ===
+// === Address & verified Google Maps place (CID-anchored) ===
 export const ADDRESS_LINE = "Row House No - 7, 8, 9, Khatri Park Co-Op Housing Society, Valvan, Lonavala - 410401";
-export const MAPS_URL =
-  "https://www.google.com/maps/search/?api=1&query=Khatri+Park+Co-Op+Housing+Society+Valvan+Lonavala+410401";
+// Resolved place: OFF THE GRID (cid 12472058479004452436)
+export const MAPS_URL = "https://www.google.com/maps?cid=12472058479004452436";
 export const MAPS_EMBED =
-  "https://maps.google.com/maps?q=Khatri+Park+Co-Op+Housing+Society+Valvan+Lonavala+410401&z=16&output=embed";
+  "https://www.google.com/maps?q=Off+The+Grid+Villas+Khatri+Park+Valvan+Lonavala&cid=12472058479004452436&z=17&output=embed";
 
 // === Gallery categories ===
 export const galleryCategories = [
@@ -66,40 +69,40 @@ export type Property = {
 
 const baseHighlights = [
   '40" Smart Android TV',
-  "High Speed Wi-Fi",
-  "Free Sheesha (get your flavours)",
-  "Badminton, Carrom, Table Tennis, Board Games, Card Games etc",
-  "Free mineral water (20 litres)",
-  "Toiletries (soaps, shampoos, towels, napkins)",
-  "Inverter backup",
-  "Air-Conditioned 2BHK with 3 Bathrooms & Open Terrace",
+  "High Speed WiFi",
+  "Open Terrace",
+  "BBQ Grill",
+  "Carrom & Indoor Games",
+  "Badminton & Table Tennis",
+  "Free Mineral Water",
+  "AC Bedrooms",
+  "3 Bathrooms",
+  "Toiletries",
+  "Inverter Backup",
 ];
 
 const introCommon =
-  "A quiet weekend getaway close to the expressway, markets & restaurants. A spacious fully furnished 2-BHK with A/C bedrooms & a fully functional kitchen.";
+  "A quiet weekend getaway close to the expressway, markets & restaurants. A spacious fully furnished 2-BHK with A/C Bedrooms & a fully functional Kitchen.";
 
 export const properties: Record<PropertyId, Property> = {
   otg1: {
     id: "otg1",
     name: "Off The Grid Villas Lonavala 1",
     shortName: "Off The Grid - 1",
-    tagline: "Private 2BHK villa · with bathtub",
+    tagline: "Entire Villa Private · with Bathtub",
     intro: introCommon,
-    highlights: [...baseHighlights, "Bath Tub with 1 attached Bathroom"],
-    hero: exterior1,
-    mosaic: [living1, bedroom4, kitchen1, bath1],
+    highlights: [...baseHighlights, "Bathtub"],
+    hero: IMG.exterior,
+    mosaic: [IMG.livingDining, IMG.bedroomLarge, IMG.kitchen, IMG.bathtub],
     photos: [
-      { src: exterior1, label: "Villa Façade", category: "Outdoor" },
-      { src: living1, label: "Living Lounge", category: "Living" },
-      { src: living3, label: "Dining Hall", category: "Living" },
-      { src: bedroom1, label: "Master Bedroom", category: "Bedrooms" },
-      { src: bedroom4, label: "Marble Suite", category: "Bedrooms" },
-      { src: bedroom6, label: "Plaid Suite", category: "Bedrooms" },
-      { src: bedroom3, label: "Twilight Suite", category: "Bedrooms" },
-      { src: kitchen1, label: "Stocked Pantry", category: "Kitchen" },
-      { src: kitchen3, label: "Chef's Corner", category: "Kitchen" },
-      { src: bath1, label: "Bathroom with Bathtub", category: "Bathrooms" },
-      { src: bath3, label: "Indigo Bath", category: "Bathrooms" },
+      { src: IMG.exterior, label: "Villa Façade", category: "Outdoor" },
+      { src: IMG.livingDining, label: "Living & Dining", category: "Living" },
+      { src: IMG.bedroomLarge, label: "Master Bedroom", category: "Bedrooms" },
+      { src: IMG.bedroomChecked, label: "Second Bedroom", category: "Bedrooms" },
+      { src: IMG.bedroomBlue, label: "Guest Bedroom", category: "Bedrooms" },
+      { src: IMG.kitchen, label: "Full Kitchen", category: "Kitchen" },
+      { src: IMG.bathtub, label: "Bathroom with Bathtub", category: "Bathrooms" },
+      { src: IMG.bathroom, label: "Bathroom", category: "Bathrooms" },
     ],
     hasBathtub: true,
   },
@@ -107,19 +110,18 @@ export const properties: Record<PropertyId, Property> = {
     id: "otg2",
     name: "Off The Grid Villas Lonavala 2",
     shortName: "Off The Grid - 2",
-    tagline: "Private 2BHK villa · open terrace",
+    tagline: "Entire Villa Private · Full Kitchen",
     intro: introCommon,
-    highlights: baseHighlights,
-    hero: exterior2,
-    mosaic: [living2, bedroom5, kitchen2, bath2],
+    highlights: [...baseHighlights, "Full Kitchen"],
+    hero: IMG.exterior,
+    mosaic: [IMG.livingDining, IMG.bedroomChecked, IMG.kitchen, IMG.bathroom],
     photos: [
-      { src: exterior2, label: "Villa Approach", category: "Outdoor" },
-      { src: living2, label: "Living & Dining", category: "Living" },
-      { src: bedroom5, label: "Master Suite", category: "Bedrooms" },
-      { src: bedroom2, label: "Garden Bedroom", category: "Bedrooms" },
-      { src: bedroom7, label: "Indigo Bedroom", category: "Bedrooms" },
-      { src: kitchen2, label: "Open Kitchen", category: "Kitchen" },
-      { src: bath2, label: "Powder Room", category: "Bathrooms" },
+      { src: IMG.exterior, label: "Villa Façade", category: "Outdoor" },
+      { src: IMG.livingDining, label: "Living & Dining", category: "Living" },
+      { src: IMG.bedroomChecked, label: "Master Bedroom", category: "Bedrooms" },
+      { src: IMG.bedroomBlue, label: "Second Bedroom", category: "Bedrooms" },
+      { src: IMG.kitchen, label: "Full Kitchen", category: "Kitchen" },
+      { src: IMG.bathroom, label: "Bathroom", category: "Bathrooms" },
     ],
     hasBathtub: false,
   },

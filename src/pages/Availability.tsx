@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, Phone, MessageCircle } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import Reveal from "@/components/site/Reveal";
 import BookingWarning from "@/components/site/BookingWarning";
-import { blockedByProperty, propertyList, PHONE, buildWhatsApp, Property } from "@/data/villa";
+import { blockedByProperty, propertyList, PHONE, buildWhatsApp, Property, CALL_HOURS, WHATSAPP_HOURS } from "@/data/villa";
 
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
 
@@ -34,7 +34,6 @@ const PropertyCalendar = ({ property }: { property: Property }) => {
       <div className="mb-5">
         <div className="text-xs uppercase tracking-[0.3em] text-primary">{property.shortName}</div>
       </div>
-
 
       <div className="mb-4 flex items-center justify-between">
         <button onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))}
@@ -82,13 +81,16 @@ const PropertyCalendar = ({ property }: { property: Property }) => {
       <div className="mt-6 grid grid-cols-2 gap-2">
         <a href={wa} target="_blank" rel="noreferrer"
            className="flex items-center justify-center gap-2 rounded-full bg-primary-gradient py-3 text-sm font-semibold text-primary-foreground shadow-warm hover:scale-[1.02]">
-          <MessageCircle className="h-4 w-4" /> WhatsApp
+          <MessageCircle className="h-4 w-4" /> WhatsApp Us
         </a>
         <a href={`tel:${PHONE}`}
            className="flex items-center justify-center gap-2 rounded-full border-2 border-primary py-3 text-sm font-semibold text-primary hover:bg-primary/5">
           <Phone className="h-4 w-4" /> Call
         </a>
       </div>
+      <p className="mt-3 text-center text-[11px] text-muted-foreground">
+        Call: {CALL_HOURS} · WhatsApp: {WHATSAPP_HOURS}
+      </p>
     </div>
   );
 };
@@ -97,12 +99,12 @@ const Availability = () => (
   <Layout>
     <section className="mx-auto max-w-7xl px-4 pt-36 text-center md:px-6 md:pt-40">
       <Reveal>
-        <div className="text-xs uppercase tracking-[0.4em] text-primary">Availability</div>
-        <h1 className="mt-3 font-display text-4xl md:text-5xl">Check Our Availability</h1>
+        <div className="text-xs uppercase tracking-[0.4em] text-primary">Booking & Enquiry</div>
+        <h1 className="mt-3 font-display text-4xl md:text-5xl">For Booking or Enquiry</h1>
         <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-          Pick your dates and reach us on WhatsApp or call — we'll be happy to confirm.
+          Please reach us on WhatsApp or Call for Booking or Enquiry — we'll be happy to confirm your dates.
         </p>
-        <div className="mx-auto mt-6 max-w-xl">
+        <div className="mt-5 flex justify-center">
           <BookingWarning />
         </div>
       </Reveal>
@@ -120,8 +122,9 @@ const Availability = () => (
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-5 px-6 text-center">
         <h2 className="font-display text-3xl md:text-4xl">We're Here to Help You Plan</h2>
         <p className="max-w-xl text-muted-foreground">
-          For availability and booking, please reach us on WhatsApp or call — we usually reply quickly.
+          Please reach us on WhatsApp or Call for Booking or Enquiry — we usually reply quickly.
         </p>
+        <p className="text-xs text-muted-foreground">Call: {CALL_HOURS} · WhatsApp: {WHATSAPP_HOURS}</p>
         <div className="flex flex-wrap justify-center gap-3">
           <a href={`tel:${PHONE}`} className="inline-flex items-center gap-2 rounded-full border-2 border-primary px-6 py-3 text-sm font-semibold text-primary hover:bg-primary/5">
             <Phone className="h-4 w-4" /> Call Now
@@ -136,4 +139,3 @@ const Availability = () => (
 );
 
 export default Availability;
-

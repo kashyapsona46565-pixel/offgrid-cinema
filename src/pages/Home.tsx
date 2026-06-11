@@ -2,30 +2,39 @@ import { Link } from "react-router-dom";
 import {
   Wifi, Tv, Wind, Utensils, Users, MapPin, Star, Phone, MessageCircle,
   Flame, Gamepad2, Trees, Car, Bath, Share2, Check, Shield, LogIn, LogOut,
-  IdCard, CreditCard, CalendarX, ShoppingBag, ChefHat, Bed, ShowerHead,
+  IdCard, CreditCard, CalendarX, ShoppingBag, ChefHat, Bed, ShowerHead, Droplets, ChefHat as ChefIcon,
 } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import Reveal from "@/components/site/Reveal";
 
-import { PHONE, buildWhatsApp } from "@/data/villa";
+import { PHONE, buildWhatsApp, CALL_HOURS, WHATSAPP_HOURS } from "@/data/villa";
 import { useProperty } from "@/context/PropertyContext";
 import { toast } from "sonner";
+
+const HIGHLIGHT_ICONS: Record<string, typeof Tv> = {
+  '40" Smart Android TV': Tv,
+  "High Speed WiFi": Wifi,
+  "Open Terrace": Trees,
+  "BBQ Grill": Flame,
+  "Carrom & Indoor Games": Gamepad2,
+  "Badminton & Table Tennis": Gamepad2,
+  "Free Mineral Water": Droplets,
+  "AC Bedrooms": Wind,
+  "3 Bathrooms": ShowerHead,
+  "Toiletries": ShowerHead,
+  "Inverter Backup": Shield,
+  "Bathtub": Bath,
+  "Full Kitchen": ChefIcon,
+};
 
 const Home = () => {
   const { selected } = useProperty();
   const wa = buildWhatsApp(selected.name);
 
-  const quickHighlights = [
-    { icon: Tv, label: '40" Smart Android TV' },
-    { icon: Wifi, label: "High Speed Wi-Fi" },
-    { icon: Flame, label: "Free Sheesha (get your flavours)" },
-    { icon: Gamepad2, label: "Badminton, Carrom, Table Tennis, Board Games, Card Games etc" },
-    { icon: Utensils, label: "Free mineral water (20 litres)" },
-    { icon: ShowerHead, label: "Toiletries (soaps, shampoos, towels, napkins)" },
-    { icon: Shield, label: "Inverter backup" },
-    { icon: Wind, label: "Air-Conditioned 2BHK with 3 Bathrooms & Open Terrace" },
-    ...(selected.hasBathtub ? [{ icon: Bath, label: "Bath Tub with 1 attached Bathroom" }] : []),
-  ];
+  const quickHighlights = selected.highlights.map((label) => ({
+    icon: HIGHLIGHT_ICONS[label] ?? Check,
+    label,
+  }));
 
   const amenityGroups = [
     {
@@ -225,26 +234,26 @@ const Home = () => {
         <Reveal delay={0.15}>
           <aside className="lg:sticky lg:top-40 self-start">
             <div className="rounded-3xl border border-border bg-card p-6 shadow-card md:p-8">
-              <div className="text-xs uppercase tracking-widest text-primary">Enquire & Book</div>
+              <div className="text-xs uppercase tracking-widest text-primary">Booking & Enquiry</div>
               <div className="mt-2 font-display text-2xl">Talk to us directly</div>
               <p className="mt-2 text-sm text-muted-foreground">
-                To check availability or book, please reach us on WhatsApp or call.
+                Please reach us on WhatsApp or Call for Booking or Enquiry.
               </p>
-
 
               <div className="mt-5 space-y-3">
                 <a href={wa} target="_blank" rel="noreferrer" className="flex w-full items-center justify-center gap-2 rounded-full bg-primary-gradient py-3.5 text-sm font-semibold text-primary-foreground shadow-warm transition hover:scale-[1.02]">
-                  <MessageCircle className="h-4 w-4" /> Book via WhatsApp
+                  <MessageCircle className="h-4 w-4" /> WhatsApp Us
                 </a>
                 <a href={`tel:${PHONE}`} className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-primary bg-background py-3.5 text-sm font-semibold text-primary transition hover:bg-primary/5">
                   <Phone className="h-4 w-4" /> Call Now
                 </a>
-                <Link to="/availability" className="block w-full rounded-full border border-border py-3.5 text-center text-sm font-semibold hover:border-primary hover:text-primary">
-                  Check Availability
+                <Link to="/availability" className="flex w-full items-center justify-center gap-2 rounded-full border-2 border-primary/40 bg-primary/5 py-3.5 text-center text-sm font-semibold text-primary transition hover:border-primary hover:bg-primary/10">
+                  For Booking or Enquiry
                 </Link>
               </div>
 
               <ul className="mt-6 space-y-2 border-t border-border pt-5 text-xs text-muted-foreground">
+                <li>· Call timings: {CALL_HOURS} · WhatsApp: {WHATSAPP_HOURS}</li>
                 <li>· Check-in 1:00 PM – 9:00 PM</li>
                 <li>· Check-out 11:00 AM</li>
                 <li>· Refundable deposit: ₹7,000 before check-in</li>
@@ -367,7 +376,7 @@ const Home = () => {
                 </li>
                 <li>
                   <div className="font-semibold text-foreground">0% Refund — 3 days before check-in date</div>
-                  <div className="mt-1 text-foreground/70">Example: Your booking is on the 8th January, Saturday. Cancellation happens after 12:00 AM of 4th January, Wednesday.</div>
+                  <div className="mt-1 text-foreground/70">Example: Your booking is on the 8th January, Saturday. Cancellation happens after 12:00 AM of 5th January, Wednesday.</div>
                 </li>
               </ul>
             </div>
@@ -399,16 +408,17 @@ const Home = () => {
       <section className="border-t border-border bg-muted/30 py-16">
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-5 px-6 text-center">
           <h2 className="font-display text-3xl md:text-4xl">Ready to Book {selected.shortName}?</h2>
-          <p className="text-muted-foreground">Reach us on WhatsApp or call — we'll be happy to help.</p>
+          <p className="text-muted-foreground">Please reach us on WhatsApp or Call for Booking or Enquiry.</p>
+          <p className="text-xs text-muted-foreground">Call: {CALL_HOURS} · WhatsApp: {WHATSAPP_HOURS}</p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href={wa} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-primary-gradient px-6 py-3 text-sm font-semibold text-primary-foreground shadow-warm hover:scale-[1.02]">
-              <MessageCircle className="h-4 w-4" /> Book on WhatsApp
+              <MessageCircle className="h-4 w-4" /> WhatsApp Us
             </a>
             <a href={`tel:${PHONE}`} className="inline-flex items-center gap-2 rounded-full border-2 border-primary px-6 py-3 text-sm font-semibold text-primary hover:bg-primary/5">
               <Phone className="h-4 w-4" /> Call Now
             </a>
-            <Link to="/availability" className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold hover:border-primary hover:text-primary">
-              Check Availability
+            <Link to="/availability" className="inline-flex items-center gap-2 rounded-full border-2 border-primary/40 bg-primary/5 px-6 py-3 text-sm font-semibold text-primary hover:border-primary hover:bg-primary/10">
+              For Booking or Enquiry
             </Link>
           </div>
         </div>

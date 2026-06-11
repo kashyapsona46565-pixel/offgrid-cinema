@@ -2,7 +2,7 @@ import { Phone, MessageCircle, MapPin, Train, Car, ShoppingBag, Utensils, Zap, M
 import Layout from "@/components/site/Layout";
 import Reveal from "@/components/site/Reveal";
 
-import { PHONE, PHONE_DISPLAY, buildWhatsApp, ADDRESS_LINE, MAPS_URL, MAPS_EMBED } from "@/data/villa";
+import { PHONE, PHONE_DISPLAY, buildWhatsApp, ADDRESS_LINE, MAPS_URL, MAPS_EMBED, CALL_HOURS, WHATSAPP_HOURS } from "@/data/villa";
 import { useProperty } from "@/context/PropertyContext";
 
 const tips = [
@@ -25,8 +25,9 @@ const Contact = () => {
           <div className="text-xs uppercase tracking-[0.4em] text-primary">Contact Us</div>
           <h1 className="mt-3 font-display text-4xl md:text-5xl">Get in touch & find us</h1>
           <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-            Lonavala, Maharashtra — minutes from the expressway, market & cafes.
+            Please reach us on WhatsApp or Call for Booking or Enquiry. Lonavala, Maharashtra — minutes from the expressway, market & cafes.
           </p>
+          <p className="mt-2 text-xs text-muted-foreground">Call: {CALL_HOURS} · WhatsApp: {WHATSAPP_HOURS}</p>
         </Reveal>
       </section>
 
@@ -65,7 +66,7 @@ const Contact = () => {
             <Phone className="h-6 w-6" />
           </span>
           <div>
-            <div className="text-xs uppercase tracking-widest text-muted-foreground">Call</div>
+            <div className="text-xs uppercase tracking-widest text-muted-foreground">Call · {CALL_HOURS}</div>
             <div className="font-display text-xl">{PHONE_DISPLAY}</div>
           </div>
         </a>
@@ -74,7 +75,7 @@ const Contact = () => {
             <MessageCircle className="h-6 w-6" />
           </span>
           <div>
-            <div className="text-xs uppercase tracking-widest text-muted-foreground">WhatsApp</div>
+            <div className="text-xs uppercase tracking-widest text-muted-foreground">WhatsApp · {WHATSAPP_HOURS}</div>
             <div className="font-display text-xl">{PHONE_DISPLAY}</div>
           </div>
         </a>
