@@ -8,7 +8,7 @@ import { buildWhatsApp } from "@/data/villa";
 const links = [
   { to: "/", label: "Home" },
   { to: "/gallery", label: "Gallery" },
-  { to: "/availability", label: "Availability" },
+  { to: "/availability", label: "Booking & Enquiry" },
   { to: "/contact", label: "Contact Us" },
 ];
 

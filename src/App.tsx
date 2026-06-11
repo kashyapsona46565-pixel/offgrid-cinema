@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { PropertyProvider } from "@/context/PropertyContext";
+import ScrollToTop from "@/components/site/ScrollToTop";
 import Home from "./pages/Home.tsx";
 import Gallery from "./pages/Gallery.tsx";
 import Availability from "./pages/Availability.tsx";
@@ -19,6 +20,7 @@ const App = () => (
       <Sonner />
       <PropertyProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/gallery" element={<Gallery />} />
