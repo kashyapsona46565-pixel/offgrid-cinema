@@ -1,18 +1,46 @@
-import { useMemo, useState } from "react";
-import { ChevronLeft, ChevronRight, Phone, MessageCircle } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ChevronLeft, ChevronRight, Phone, MessageCircle, RefreshCw } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import Reveal from "@/components/site/Reveal";
 import BookingWarning from "@/components/site/BookingWarning";
-import { blockedByProperty, propertyList, PHONE, buildWhatsApp, Property, CALL_HOURS, WHATSAPP_HOURS } from "@/data/villa";
+import { propertyList, PHONE, buildWhatsApp, Property, CALL_HOURS, WHATSAPP_HOURS } from "@/data/villa";
+import { fetchICalBlocked } from "@/lib/ical";
 
-const fmt = (d: Date) => d.toISOString().slice(0, 10);
+const fmt = (d: Date) => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+};
 
 const PropertyCalendar = ({ property }: { property: Property }) => {
   const [month, setMonth] = useState(() => {
     const d = new Date();
     return new Date(d.getFullYear(), d.getMonth(), 1);
   });
-  const blocked = blockedByProperty[property.id];
+  const [blocked, setBlocked] = useState<string[]>([]);
+  const [status, setStatus] = useState<"loading" | "ok" | "error" | "none">(
+    property.icalUrl ? "loading" : "none"
+  );
+
+  useEffect(() => {
+    if (!property.icalUrl) return;
+    let cancelled = false;
+    setStatus("loading");
+    fetchICalBlocked(property.icalUrl)
+      .then((dates) => {
+        if (cancelled) return;
+        setBlocked(dates);
+        setStatus("ok");
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setStatus("error");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [property.icalUrl]);
 
   const days = useMemo(() => {
     const out: (Date | null)[] = [];
