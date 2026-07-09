@@ -65,6 +65,7 @@ export type Property = {
   mosaic: string[];
   photos: Photo[];
   hasBathtub: boolean;
+  icalUrl?: string;
 };
 
 const baseHighlights = [
@@ -105,6 +106,7 @@ export const properties: Record<PropertyId, Property> = {
       { src: IMG.bathroom, label: "Bathroom", category: "Bathrooms" },
     ],
     hasBathtub: true,
+    icalUrl: "https://www.airbnb.com/calendar/ical/18594585.ics?t=46e0dfedeb834b09a724f7eb6e708f5f&locale=en-GB",
   },
   otg2: {
     id: "otg2",
