@@ -126,6 +126,7 @@ export const properties: Record<PropertyId, Property> = {
       { src: IMG.bathroom, label: "Bathroom", category: "Bathrooms" },
     ],
     hasBathtub: false,
+    icalUrl: "https://www.airbnb.com/calendar/ical/30217589.ics?t=02a0077437b748cf9196907548f408d5&locale=en-GB",
   },
 };
 
