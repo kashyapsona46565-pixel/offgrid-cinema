@@ -59,8 +59,23 @@ const PropertyCalendar = ({ property }: { property: Property }) => {
 
   return (
     <div className="rounded-3xl border border-border bg-card p-6 shadow-warm md:p-8">
-      <div className="mb-5">
+      <div className="mb-5 flex items-center justify-between gap-3">
         <div className="text-xs uppercase tracking-[0.3em] text-primary">{property.shortName}</div>
+        {status === "loading" && (
+          <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+            <RefreshCw className="h-3 w-3 animate-spin" /> Syncing Airbnb…
+          </span>
+        )}
+        {status === "ok" && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-emerald-600">
+            Live · Airbnb Synced
+          </span>
+        )}
+        {status === "error" && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-amber-600">
+            Sync failed · WhatsApp us
+          </span>
+        )}
       </div>
 
       <div className="mb-4 flex items-center justify-between">
