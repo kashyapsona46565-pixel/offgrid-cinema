@@ -1,18 +1,46 @@
-import { useMemo, useState } from "react";
-import { ChevronLeft, ChevronRight, Phone, MessageCircle } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ChevronLeft, ChevronRight, Phone, MessageCircle, RefreshCw } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import Reveal from "@/components/site/Reveal";
 import BookingWarning from "@/components/site/BookingWarning";
-import { blockedByProperty, propertyList, PHONE, buildWhatsApp, Property, CALL_HOURS, WHATSAPP_HOURS } from "@/data/villa";
+import { propertyList, PHONE, buildWhatsApp, Property, CALL_HOURS, WHATSAPP_HOURS } from "@/data/villa";
+import { fetchICalBlocked } from "@/lib/ical";
 
-const fmt = (d: Date) => d.toISOString().slice(0, 10);
+const fmt = (d: Date) => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+};
 
 const PropertyCalendar = ({ property }: { property: Property }) => {
   const [month, setMonth] = useState(() => {
     const d = new Date();
     return new Date(d.getFullYear(), d.getMonth(), 1);
   });
-  const blocked = blockedByProperty[property.id];
+  const [blocked, setBlocked] = useState<string[]>([]);
+  const [status, setStatus] = useState<"loading" | "ok" | "error" | "none">(
+    property.icalUrl ? "loading" : "none"
+  );
+
+  useEffect(() => {
+    if (!property.icalUrl) return;
+    let cancelled = false;
+    setStatus("loading");
+    fetchICalBlocked(property.icalUrl)
+      .then((dates) => {
+        if (cancelled) return;
+        setBlocked(dates);
+        setStatus("ok");
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setStatus("error");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [property.icalUrl]);
 
   const days = useMemo(() => {
     const out: (Date | null)[] = [];
@@ -31,8 +59,23 @@ const PropertyCalendar = ({ property }: { property: Property }) => {
 
   return (
     <div className="rounded-3xl border border-border bg-card p-6 shadow-warm md:p-8">
-      <div className="mb-5">
+      <div className="mb-5 flex items-center justify-between gap-3">
         <div className="text-xs uppercase tracking-[0.3em] text-primary">{property.shortName}</div>
+        {status === "loading" && (
+          <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+            <RefreshCw className="h-3 w-3 animate-spin" /> Syncing Airbnb…
+          </span>
+        )}
+        {status === "ok" && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-emerald-600">
+            Live · Airbnb Synced
+          </span>
+        )}
+        {status === "error" && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-amber-600">
+            Sync failed · WhatsApp us
+          </span>
+        )}
       </div>
 
       <div className="mb-4 flex items-center justify-between">
