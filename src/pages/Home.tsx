@@ -145,10 +145,6 @@ const Home = () => {
                 </span>
                 <span className="hidden md:inline">·</span>
                 <span className="inline-flex items-center gap-1">
-                  <MapPin className="h-4 w-4 text-primary" /> Lonavala, Maharashtra
-                </span>
-                <span className="hidden md:inline">·</span>
-                <span className="inline-flex items-center gap-1">
                   <Users className="h-4 w-4 text-primary" /> Up to 10 guests
                 </span>
               </div>
