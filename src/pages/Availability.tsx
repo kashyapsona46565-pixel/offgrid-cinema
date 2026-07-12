@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Phone, MessageCircle, RefreshCw } from "lucide-react";
 import Layout from "@/components/site/Layout";
 import Reveal from "@/components/site/Reveal";
@@ -19,6 +19,7 @@ const PropertyCalendar = ({ property }: { property: Property }) => {
     return new Date(d.getFullYear(), d.getMonth(), 1);
   });
   const [blocked, setBlocked] = useState<string[]>(() => (property.icalUrl ? getCachedICalBlocked(property.icalUrl) : []));
+  const hasSyncedRef = useRef(blocked.length > 0);
   const [status, setStatus] = useState<"loading" | "ok" | "retrying" | "none">(() => {
     if (!property.icalUrl) return "none";
     return getCachedICalBlocked(property.icalUrl).length > 0 ? "ok" : "loading";
@@ -32,16 +33,17 @@ const PropertyCalendar = ({ property }: { property: Property }) => {
 
     const sync = async (retryDelay = 4000) => {
       if (cancelled) return;
-      setStatus((current) => (blocked.length > 0 || current === "ok" ? "ok" : "loading"));
+      setStatus((current) => (hasSyncedRef.current || current === "ok" ? "ok" : "loading"));
 
       try {
         const dates = await fetchICalBlocked(property.icalUrl!);
         if (cancelled) return;
+        hasSyncedRef.current = true;
         setBlocked(dates);
         setStatus("ok");
       } catch {
         if (cancelled) return;
-        setStatus((current) => (blocked.length > 0 || current === "ok" ? "ok" : "retrying"));
+        setStatus((current) => (hasSyncedRef.current || current === "ok" ? "ok" : "retrying"));
         retryTimer = setTimeout(() => sync(Math.min(retryDelay * 1.5, 30000)), retryDelay);
       }
     };
@@ -54,7 +56,7 @@ const PropertyCalendar = ({ property }: { property: Property }) => {
       if (retryTimer) clearTimeout(retryTimer);
       if (intervalTimer) clearInterval(intervalTimer);
     };
-  }, [property.icalUrl, blocked.length]);
+  }, [property.icalUrl]);
 
   const days = useMemo(() => {
     const out: (Date | null)[] = [];
