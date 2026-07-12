@@ -131,22 +131,3 @@ export const properties: Record<PropertyId, Property> = {
 };
 
 export const propertyList: Property[] = [properties.otg1, properties.otg2];
-
-// === Demo blocked dates (per property) ===
-const buildBlocked = (offsets: [number, number][]) => {
-  const out: string[] = [];
-  const today = new Date();
-  offsets.forEach(([a, b]) => {
-    for (let i = a; i < b; i++) {
-      const d = new Date(today);
-      d.setDate(d.getDate() + i);
-      out.push(d.toISOString().slice(0, 10));
-    }
-  });
-  return out;
-};
-
-export const blockedByProperty: Record<PropertyId, string[]> = {
-  otg1: buildBlocked([[3, 6], [14, 17], [25, 28]]),
-  otg2: buildBlocked([[5, 9], [18, 21]]),
-};
