@@ -4,7 +4,7 @@ import Layout from "@/components/site/Layout";
 import Reveal from "@/components/site/Reveal";
 import BookingWarning from "@/components/site/BookingWarning";
 import { propertyList, PHONE, buildWhatsApp, Property, CALL_HOURS, WHATSAPP_HOURS } from "@/data/villa";
-import { fetchICalBlocked } from "@/lib/ical";
+import { fetchICalBlocked, getCachedICalBlocked } from "@/lib/ical";
 
 const fmt = (d: Date) => {
   const y = d.getFullYear();
@@ -18,29 +18,43 @@ const PropertyCalendar = ({ property }: { property: Property }) => {
     const d = new Date();
     return new Date(d.getFullYear(), d.getMonth(), 1);
   });
-  const [blocked, setBlocked] = useState<string[]>([]);
-  const [status, setStatus] = useState<"loading" | "ok" | "error" | "none">(
-    property.icalUrl ? "loading" : "none"
-  );
+  const [blocked, setBlocked] = useState<string[]>(() => (property.icalUrl ? getCachedICalBlocked(property.icalUrl) : []));
+  const [status, setStatus] = useState<"loading" | "ok" | "retrying" | "none">(() => {
+    if (!property.icalUrl) return "none";
+    return getCachedICalBlocked(property.icalUrl).length > 0 ? "ok" : "loading";
+  });
 
   useEffect(() => {
     if (!property.icalUrl) return;
     let cancelled = false;
-    setStatus("loading");
-    fetchICalBlocked(property.icalUrl)
-      .then((dates) => {
+    let retryTimer: ReturnType<typeof setTimeout> | undefined;
+    let intervalTimer: ReturnType<typeof setInterval> | undefined;
+
+    const sync = async (retryDelay = 4000) => {
+      if (cancelled) return;
+      setStatus((current) => (blocked.length > 0 || current === "ok" ? "ok" : "loading"));
+
+      try {
+        const dates = await fetchICalBlocked(property.icalUrl!);
         if (cancelled) return;
         setBlocked(dates);
         setStatus("ok");
-      })
-      .catch(() => {
+      } catch {
         if (cancelled) return;
-        setStatus("error");
-      });
+        setStatus((current) => (blocked.length > 0 || current === "ok" ? "ok" : "retrying"));
+        retryTimer = setTimeout(() => sync(Math.min(retryDelay * 1.5, 30000)), retryDelay);
+      }
+    };
+
+    sync();
+    intervalTimer = setInterval(() => sync(), 60000);
+
     return () => {
       cancelled = true;
+      if (retryTimer) clearTimeout(retryTimer);
+      if (intervalTimer) clearInterval(intervalTimer);
     };
-  }, [property.icalUrl]);
+  }, [property.icalUrl, blocked.length]);
 
   const days = useMemo(() => {
     const out: (Date | null)[] = [];
@@ -71,9 +85,9 @@ const PropertyCalendar = ({ property }: { property: Property }) => {
             Live · Airbnb Synced
           </span>
         )}
-        {status === "error" && (
-          <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-amber-600">
-            Sync failed · WhatsApp us
+        {status === "retrying" && (
+          <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+            <RefreshCw className="h-3 w-3 animate-spin" /> Syncing Airbnb…
           </span>
         )}
       </div>

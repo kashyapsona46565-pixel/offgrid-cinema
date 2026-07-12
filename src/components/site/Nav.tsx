@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import { Menu, X, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import PropertySwitcher from "./PropertySwitcher";
@@ -15,6 +15,8 @@ const links = [
 export const Nav = () => {
   const [open, setOpen] = useState(false);
   const { selected } = useProperty();
+  const { pathname } = useLocation();
+  const showPropertySwitcher = pathname !== "/availability";
   return (
     <header className="fixed left-0 right-0 top-0 z-50 bg-background/85 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-8">
@@ -62,10 +64,11 @@ export const Nav = () => {
         </button>
       </div>
 
-      {/* Property switcher row */}
-      <div className="mx-auto flex max-w-7xl items-center justify-center px-4 pb-3 md:px-8">
-        <PropertySwitcher size="sm" />
-      </div>
+      {showPropertySwitcher && (
+        <div className="mx-auto flex max-w-7xl items-center justify-center px-4 pb-3 md:px-8">
+          <PropertySwitcher size="sm" />
+        </div>
+      )}
 
       {open && (
         <div className="mx-4 mb-3 flex flex-col gap-1 rounded-2xl border border-border bg-card p-3 md:hidden">

@@ -1,7 +1,53 @@
-// Fetch an Airbnb (or any) iCal feed and return blocked YYYY-MM-DD date strings.
-// Uses a CORS proxy since browsers can't call airbnb.com directly.
+import { supabase } from "@/integrations/supabase/client";
 
-const PROXY = "https://api.allorigins.win/raw?url=";
+// Fetch an Airbnb iCal feed through the site backend, with browser-side cache
+// so guests do not need to refresh if a temporary network retry is happening.
+
+type ICalPayload = {
+  dates: string[];
+  fetchedAt?: string;
+  source?: string;
+};
+
+type CachedICal = {
+  dates: string[];
+  fetchedAt: string;
+  savedAt: number;
+};
+
+const CACHE_TTL_MS = 12 * 60 * 60 * 1000;
+
+const cacheKey = (url: string) => `otg.ical.${btoa(url).replace(/=+$/, "")}`;
+
+export const getCachedICalBlocked = (url: string): string[] => {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const raw = localStorage.getItem(cacheKey(url));
+    if (!raw) return [];
+
+    const cached = JSON.parse(raw) as CachedICal;
+    if (!Array.isArray(cached.dates) || Date.now() - cached.savedAt > CACHE_TTL_MS) return [];
+    return cached.dates;
+  } catch {
+    return [];
+  }
+};
+
+const saveCachedICalBlocked = (url: string, dates: string[], fetchedAt?: string) => {
+  if (typeof window === "undefined") return;
+
+  try {
+    const value: CachedICal = {
+      dates,
+      fetchedAt: fetchedAt || new Date().toISOString(),
+      savedAt: Date.now(),
+    };
+    localStorage.setItem(cacheKey(url), JSON.stringify(value));
+  } catch {
+    // Ignore storage errors; live sync still works without cache.
+  }
+};
 
 const toKey = (d: Date) => {
   const y = d.getFullYear();
@@ -19,26 +65,40 @@ const parseICSDate = (raw: string): Date => {
 };
 
 export const parseICS = (text: string): string[] => {
-  const out: string[] = [];
-  const events = text.split("BEGIN:VEVENT").slice(1);
+  const out = new Set<string>();
+  const events = text.replace(/\r?\n[ \t]/g, "").split("BEGIN:VEVENT").slice(1);
   for (const ev of events) {
-    const s = ev.match(/DTSTART[^:\n]*:([0-9T]+Z?)/);
-    const e = ev.match(/DTEND[^:\n]*:([0-9T]+Z?)/);
+    const s = ev.match(/DTSTART[^:\n]*:([0-9]{8}(?:T[0-9]{6}Z?)?)/);
+    const e = ev.match(/DTEND[^:\n]*:([0-9]{8}(?:T[0-9]{6}Z?)?)/);
     if (!s || !e) continue;
     const start = parseICSDate(s[1]);
     const end = parseICSDate(e[1]); // exclusive per iCal spec
     const cur = new Date(start);
-    while (cur < end) {
-      out.push(toKey(cur));
+    let guard = 0;
+    while (cur < end && guard < 370) {
+      out.add(toKey(cur));
       cur.setDate(cur.getDate() + 1);
+      guard += 1;
     }
   }
-  return out;
+  return [...out].sort();
 };
 
 export const fetchICalBlocked = async (url: string): Promise<string[]> => {
-  const res = await fetch(PROXY + encodeURIComponent(url), { cache: "no-store" });
-  if (!res.ok) throw new Error(`iCal fetch failed: ${res.status}`);
-  const text = await res.text();
-  return parseICS(text);
+  const cached = getCachedICalBlocked(url);
+
+  try {
+    const { data, error } = await supabase.functions.invoke<ICalPayload>("fetch-ical", {
+      body: { url },
+    });
+
+    if (error) throw error;
+    if (!data || !Array.isArray(data.dates)) throw new Error("Calendar sync returned no dates");
+
+    saveCachedICalBlocked(url, data.dates, data.fetchedAt);
+    return data.dates;
+  } catch (error) {
+    if (cached.length > 0) return cached;
+    throw error;
+  }
 };
