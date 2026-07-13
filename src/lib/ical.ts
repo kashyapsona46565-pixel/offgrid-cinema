@@ -33,7 +33,7 @@ export const getCachedICalBlocked = (url: string): string[] => {
 };
 
 export const getCachedICalSync = (url: string): CachedICal | null => {
-  if (typeof window === "undefined") return [];
+  if (typeof window === "undefined") return null;
 
   try {
     const raw = localStorage.getItem(cacheKey(url));
