@@ -7,6 +7,7 @@ type ICalPayload = {
   dates: string[];
   fetchedAt?: string;
   source?: string;
+  eventCount?: number;
 };
 
 type CachedICal = {
@@ -15,22 +16,34 @@ type CachedICal = {
   savedAt: number;
 };
 
+export type ICalSyncResult = {
+  dates: string[];
+  fetchedAt: string;
+  source?: string;
+  eventCount?: number;
+  cacheFallback?: boolean;
+};
+
 const CACHE_TTL_MS = 12 * 60 * 60 * 1000;
 
 const cacheKey = (url: string) => `otg.ical.${btoa(url).replace(/=+$/, "")}`;
 
 export const getCachedICalBlocked = (url: string): string[] => {
+  return getCachedICalSync(url)?.dates ?? [];
+};
+
+export const getCachedICalSync = (url: string): CachedICal | null => {
   if (typeof window === "undefined") return [];
 
   try {
     const raw = localStorage.getItem(cacheKey(url));
-    if (!raw) return [];
+    if (!raw) return null;
 
     const cached = JSON.parse(raw) as CachedICal;
-    if (!Array.isArray(cached.dates) || Date.now() - cached.savedAt > CACHE_TTL_MS) return [];
-    return cached.dates;
+    if (!Array.isArray(cached.dates) || Date.now() - cached.savedAt > CACHE_TTL_MS) return null;
+    return cached;
   } catch {
-    return [];
+    return null;
   }
 };
 
@@ -84,21 +97,38 @@ export const parseICS = (text: string): string[] => {
   return [...out].sort();
 };
 
-export const fetchICalBlocked = async (url: string): Promise<string[]> => {
-  const cached = getCachedICalBlocked(url);
+export const fetchICalSync = async (url: string, options: { forceRefresh?: boolean } = {}): Promise<ICalSyncResult> => {
+  const cached = getCachedICalSync(url);
 
   try {
     const { data, error } = await supabase.functions.invoke<ICalPayload>("fetch-ical", {
-      body: { url },
+      body: { url, forceRefresh: options.forceRefresh === true },
     });
 
     if (error) throw error;
     if (!data || !Array.isArray(data.dates)) throw new Error("Calendar sync returned no dates");
 
     saveCachedICalBlocked(url, data.dates, data.fetchedAt);
-    return data.dates;
+    return {
+      dates: data.dates,
+      fetchedAt: data.fetchedAt || new Date().toISOString(),
+      source: data.source,
+      eventCount: data.eventCount,
+    };
   } catch (error) {
-    if (cached.length > 0) return cached;
+    if (cached && cached.dates.length > 0) {
+      return {
+        dates: cached.dates,
+        fetchedAt: cached.fetchedAt,
+        source: "browser-cache",
+        cacheFallback: true,
+      };
+    }
     throw error;
   }
+};
+
+export const fetchICalBlocked = async (url: string): Promise<string[]> => {
+  const result = await fetchICalSync(url);
+  return result.dates;
 };
