@@ -1,7 +1,4 @@
-const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
+import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 
 type CacheValue = {
   dates: string[];
@@ -97,19 +94,21 @@ const fetchCalendarText = async (url: string) => {
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
-    return new Response(null, { headers: CORS_HEADERS });
+    return new Response("ok", { headers: corsHeaders });
   }
 
   try {
-    const { url } = await req.json();
+    const body = await req.json().catch(() => null);
+    const url = body?.url;
+    const forceRefresh = body?.forceRefresh === true;
 
     if (typeof url !== "string" || !isAllowedAirbnbCalendar(url)) {
-      return Response.json({ error: "Invalid Airbnb calendar URL" }, { status: 400, headers: CORS_HEADERS });
+      return Response.json({ error: "Invalid Airbnb calendar URL" }, { status: 400, headers: corsHeaders });
     }
 
     const cached = memoryCache.get(url);
-    if (cached && cached.expiresAt > Date.now()) {
-      return Response.json({ ...cached.value, source: "cache" }, { headers: CORS_HEADERS });
+    if (!forceRefresh && cached && cached.expiresAt > Date.now()) {
+      return Response.json({ ...cached.value, source: "cache" }, { headers: corsHeaders });
     }
 
     try {
@@ -117,17 +116,17 @@ Deno.serve(async (req) => {
       const parsed = parseICS(text);
       const value = { ...parsed, fetchedAt: new Date().toISOString() };
       memoryCache.set(url, { expiresAt: Date.now() + FRESH_CACHE_MS, value });
-      return Response.json({ ...value, source: "airbnb" }, { headers: CORS_HEADERS });
+      return Response.json({ ...value, source: "airbnb" }, { headers: corsHeaders });
     } catch (error) {
       if (cached && cached.expiresAt > Date.now() - STALE_CACHE_MS) {
-        return Response.json({ ...cached.value, source: "stale-cache" }, { headers: CORS_HEADERS });
+        return Response.json({ ...cached.value, source: "stale-cache" }, { headers: corsHeaders });
       }
       throw error;
     }
   } catch (error) {
     return Response.json(
       { error: error instanceof Error ? error.message : "Calendar sync failed" },
-      { status: 502, headers: CORS_HEADERS },
+      { status: 502, headers: corsHeaders },
     );
   }
 });
