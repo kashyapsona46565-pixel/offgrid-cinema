@@ -1,21 +1,14 @@
-import exterior from "@/assets/real-IMG_20260611_153504.jpg.asset.json";
-import bedroomLarge from "@/assets/real-IMG_20260611_153515.jpg.asset.json";
-import livingDining from "@/assets/real-IMG_20260611_153522.jpg.asset.json";
-import kitchen from "@/assets/real-IMG_20260611_153532.jpg.asset.json";
-import bedroomChecked from "@/assets/real-IMG_20260611_153540.jpg.asset.json";
-import bathtub from "@/assets/real-IMG_20260611_153551.jpg.asset.json";
-import bedroomBlue from "@/assets/real-IMG_20260611_153559.jpg.asset.json";
-import bathroom from "@/assets/real-IMG_20260611_153608.jpg.asset.json";
-
+// Photos live in /public/villa/ so they are bundled into the production build
+// and served directly by any static host (Hostinger, Netlify, etc.).
 const IMG = {
-  exterior: exterior.url,
-  bedroomLarge: bedroomLarge.url,
-  livingDining: livingDining.url,
-  kitchen: kitchen.url,
-  bedroomChecked: bedroomChecked.url,
-  bathtub: bathtub.url,
-  bedroomBlue: bedroomBlue.url,
-  bathroom: bathroom.url,
+  exterior: "villa/exterior.jpg",
+  bedroomLarge: "villa/bedroom-large.jpg",
+  livingDining: "villa/living-dining.jpg",
+  kitchen: "villa/kitchen.jpg",
+  bedroomChecked: "villa/bedroom-checked.jpg",
+  bathtub: "villa/bathtub.jpg",
+  bedroomBlue: "villa/bedroom-blue.jpg",
+  bathroom: "villa/bathroom.jpg",
 };
 
 // === Owner contact ===
